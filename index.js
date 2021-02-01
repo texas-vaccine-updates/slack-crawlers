@@ -20,7 +20,7 @@ const slackMessageBlock = {
       type: "section",
       text: {
         type: "mrkdwn",
-        text: "*Vaccines are available! 💉*",
+        text: "*Vaccines are available! @here 💉*",
       },
     },
     {
