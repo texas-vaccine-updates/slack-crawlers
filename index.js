@@ -14,7 +14,6 @@ dotenv.config();
 const url = process.env.SLACK_WEBHOOK_URL;
 const webhook = new IncomingWebhook(url);
 
-const interval = 25 * 60 * 1000; // interval in milliseconds - {25mins x 60s x 1000}ms
 const keepaliveURL = "https://texas-vaccines.herokuapp.com/";
 
 app.get("/", function (req, res) {
@@ -23,7 +22,7 @@ app.get("/", function (req, res) {
 
 (() => {
   const cronJob = cron.CronJob("0 */25 * * * *", () => {
-    fetch(url)
+    fetch(keepaliveURL)
       .then((res) =>
         console.log(`response-ok: ${res.ok}, status: ${res.status}`)
       )
@@ -63,28 +62,29 @@ const slackMessageBlock = {
   ],
 };
 
-// cron.schedule(cronJobInterval, () => {
-try {
-  (async () => {
-    const response = await fetch(hebURL);
-    const vaccineLocations = await response.json();
-    if (response.status === 200) {
-      console.log("Checking for vaccines...");
-      for (const location in vaccineLocations.locations) {
-        const openTimeslot = vaccineLocations.locations[location].openTimeslots;
+cron.schedule(cronJobInterval, () => {
+  try {
+    (async () => {
+      const response = await fetch(hebURL);
+      const vaccineLocations = await response.json();
+      if (response.status === 200) {
+        console.log("Checking for vaccines...");
+        for (const location in vaccineLocations.locations) {
+          const openTimeslot =
+            vaccineLocations.locations[location].openTimeslots;
 
-        if (openTimeslot !== 0) {
-          console.log("Vaccines available.");
-          await webhook.send(slackMessageBlock);
-          return;
+          if (openTimeslot !== 0) {
+            console.log("Vaccines available.");
+            await webhook.send(slackMessageBlock);
+            return;
+          }
         }
       }
-    }
-    console.log("Done.");
-  })();
-} catch (error) {
-  console.error(error);
-}
-// });
+      console.log("Done.");
+    })();
+  } catch (error) {
+    console.error(error);
+  }
+});
 
 app.listen(process.env.PORT);
