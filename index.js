@@ -14,6 +14,25 @@ dotenv.config();
 const url = process.env.SLACK_WEBHOOK_URL;
 const webhook = new IncomingWebhook(url);
 
+const interval = 25 * 60 * 1000; // interval in milliseconds - {25mins x 60s x 1000}ms
+const keepaliveURL = "https://texas-vaccines.herokuapp.com/";
+
+app.get("/", function (req, res) {
+  res.send("Keep alive.");
+});
+
+(() => {
+  const cronJob = cron.CronJob("0 */25 * * * *", () => {
+    fetch(url)
+      .then((res) =>
+        console.log(`response-ok: ${res.ok}, status: ${res.status}`)
+      )
+      .catch((err) => console.error(err));
+  });
+
+  cronJob.start();
+})();
+
 const slackMessageBlock = {
   blocks: [
     {
