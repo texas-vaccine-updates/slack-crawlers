@@ -3,6 +3,8 @@ const express = require("express");
 const fetch = require("node-fetch");
 const dotenv = require("dotenv");
 const { IncomingWebhook } = require("@slack/webhook");
+const hebURL =
+  "https://heb-ecom-covid-vaccine.hebdigital-prd.com/vaccine_locations.json";
 
 const cronJobInterval = "*/2 * * * *";
 
@@ -44,16 +46,12 @@ const slackMessageBlock = {
 
 cron.schedule(cronJobInterval, () => {
   (async () => {
-    console.log("hwosefihesifjh");
-
-    const response = await fetch(
-      "https://heb-ecom-covid-vaccine.hebdigital-prd.com/vaccine_locations.json"
-    );
+    const response = await fetch(hebURL);
     const vaccineLocations = await response.json();
 
     for (const location in vaccineLocations.locations) {
       const openTimeslot = vaccineLocations.locations[location].openTimeslots;
-      if (openTimeslot === 0) {
+      if (openTimeslot !== 0) {
         await webhook.send(slackMessageBlock);
         return;
       }
