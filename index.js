@@ -45,20 +45,23 @@ const slackMessageBlock = {
 };
 
 cron.schedule(cronJobInterval, () => {
-  (async () => {
-    console.log("job starting");
-    const response = await fetch(hebURL);
-    const vaccineLocations = await response.json();
+  try {
+    (async () => {
+      const response = await fetch(hebURL);
+      const vaccineLocations = await response.json();
 
-    for (const location in vaccineLocations.locations) {
-      const openTimeslot = vaccineLocations.locations[location].openTimeslots;
-      if (openTimeslot === 0) {
-        await webhook.send(slackMessageBlock);
-        return;
+      for (const location in vaccineLocations.locations) {
+        const openTimeslot = vaccineLocations.locations[location].openTimeslots;
+
+        if (typeof openTimeslot === "number" && openTimeslot !== 0) {
+          await webhook.send(slackMessageBlock);
+          return;
+        }
       }
-    }
-    console.log("job done");
-  })();
+    })();
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 app.listen(process.env.PORT);
