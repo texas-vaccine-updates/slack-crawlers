@@ -21,15 +21,13 @@ app.get("/", function (req, res) {
 });
 
 (() => {
-  const cronJob = cron.CronJob("0 */25 * * * *", () => {
+  cron.schedule("0 */25 * * * *", () => {
     fetch(keepaliveURL)
       .then((res) =>
         console.log(`response-ok: ${res.ok}, status: ${res.status}`)
       )
       .catch((err) => console.error(err));
   });
-
-  cronJob.start();
 })();
 
 const slackMessageBlock = {
