@@ -52,7 +52,7 @@ cron.schedule(cronJobInterval, () => {
 
     for (const location in vaccineLocations.locations) {
       const openTimeslot = vaccineLocations.locations[location].openTimeslots;
-      if (openTimeslot !== 0) {
+      if (openTimeslot === 0) {
         await webhook.send(slackMessageBlock);
         return;
       }
