@@ -20,7 +20,7 @@ const slackMessageBlock = {
       type: "section",
       text: {
         type: "mrkdwn",
-        text: "*Vaccines are available! @here 💉*",
+        text: "*Vaccines are available! 💉*",
       },
     },
     {
@@ -49,14 +49,16 @@ try {
   (async () => {
     const response = await fetch(hebURL);
     const vaccineLocations = await response.json();
-    console.log("Checking for vaccines...");
-    for (const location in vaccineLocations.locations) {
-      const openTimeslot = vaccineLocations.locations[location].openTimeslots;
+    if (response.status === 200) {
+      console.log("Checking for vaccines...");
+      for (const location in vaccineLocations.locations) {
+        const openTimeslot = vaccineLocations.locations[location].openTimeslots;
 
-      if (response.status === 200 && openTimeslot !== 0) {
-        console.log("Vaccines available.");
-        await webhook.send(slackMessageBlock);
-        return;
+        if (openTimeslot === 0) {
+          console.log("Vaccines available.");
+          await webhook.send(slackMessageBlock);
+          return;
+        }
       }
     }
     console.log("Done.");
