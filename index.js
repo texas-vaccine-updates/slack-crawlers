@@ -44,26 +44,26 @@ const slackMessageBlock = {
   ],
 };
 
-cron.schedule(cronJobInterval, () => {
-  try {
-    (async () => {
-      const response = await fetch(hebURL);
-      const vaccineLocations = await response.json();
-      console.log("Checking for vaccines...");
-      for (const location in vaccineLocations.locations) {
-        const openTimeslot = vaccineLocations.locations[location].openTimeslots;
+// cron.schedule(cronJobInterval, () => {
+try {
+  (async () => {
+    const response = await fetch(hebURL);
+    const vaccineLocations = await response.json();
+    console.log("Checking for vaccines...");
+    for (const location in vaccineLocations.locations) {
+      const openTimeslot = vaccineLocations.locations[location].openTimeslots;
 
-        if (typeof openTimeslot === "number" && openTimeslot !== 0) {
-          console.log("Vaccines available.");
-          await webhook.send(slackMessageBlock);
-          return;
-        }
+      if (typeof openTimeslot === "number" && openTimeslot !== 0) {
+        console.log("Vaccines available.");
+        await webhook.send(slackMessageBlock);
+        return;
       }
-      console.log("Done.");
-    })();
-  } catch (error) {
-    console.error(error);
-  }
-});
+    }
+    console.log("Done.");
+  })();
+} catch (error) {
+  console.error(error);
+}
+// });
 
 app.listen(process.env.PORT);
