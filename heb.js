@@ -53,9 +53,9 @@ const slackMessageBlock = {
 cron.schedule(cronJobInterval, () => {
   try {
     (async () => {
-      const alive = await fetch(keepaliveURL);
-      const ress = await alive.text();
-      console.log(ress);
+      const keep = await fetch(keepaliveURL);
+      const alive = await keep.text();
+      console.log(alive);
 
       const response = await fetch(hebURL);
       const vaccineLocations = await response.json();
