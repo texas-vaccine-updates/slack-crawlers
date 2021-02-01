@@ -59,8 +59,8 @@ cron.schedule(cronJobInterval, () => {
           return;
         }
       }
+      console.log("Done.");
     })();
-    console.log("Done.");
   } catch (error) {
     console.error(error);
   }
