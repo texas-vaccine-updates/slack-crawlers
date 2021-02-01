@@ -53,7 +53,7 @@ try {
     for (const location in vaccineLocations.locations) {
       const openTimeslot = vaccineLocations.locations[location].openTimeslots;
 
-      if (typeof openTimeslot === "number" && openTimeslot !== 0) {
+      if (response.status === 200 && openTimeslot !== 0) {
         console.log("Vaccines available.");
         await webhook.send(slackMessageBlock);
         return;
