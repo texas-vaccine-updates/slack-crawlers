@@ -21,7 +21,7 @@ app.get("/", function (req, res) {
 });
 
 (() => {
-  cron.schedule("0 */25 * * * *", () => {
+  cron.schedule("*/5 * * * *", () => {
     fetch(keepaliveURL)
       .then((res) =>
         console.log(`response-ok: ${res.ok}, status: ${res.status}`)
