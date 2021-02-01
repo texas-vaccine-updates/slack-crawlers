@@ -17,18 +17,8 @@ const webhook = new IncomingWebhook(url);
 const keepaliveURL = "https://texas-vaccines.herokuapp.com/";
 
 app.get("/", function (req, res) {
-  res.send("Keep alive.");
+  res.send("Staying alive.");
 });
-
-(() => {
-  cron.schedule("*/5 * * * *", () => {
-    fetch(keepaliveURL)
-      .then((res) =>
-        console.log(`response-ok: ${res.ok}, status: ${res.status}`)
-      )
-      .catch((err) => console.error(err));
-  });
-})();
 
 const slackMessageBlock = {
   blocks: [
@@ -63,10 +53,16 @@ const slackMessageBlock = {
 cron.schedule(cronJobInterval, () => {
   try {
     (async () => {
+      const alive = await fetch(keepaliveURL);
+      const ress = await alive.text();
+      console.log(ress);
+
       const response = await fetch(hebURL);
       const vaccineLocations = await response.json();
+
       if (response.status === 200) {
         console.log("Checking for vaccines...");
+
         for (const location in vaccineLocations.locations) {
           const openTimeslot =
             vaccineLocations.locations[location].openTimeslots;
