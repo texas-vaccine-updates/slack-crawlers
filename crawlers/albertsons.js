@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 const dotenv = require('dotenv');
 const {IncomingWebhook} = require('@slack/webhook');
-const texasRandalls = require('../randalls_locations.json');
+const texasRandalls = require('../schemas/randalls_locations.json');
 const renderSlackMessage = require('../utils/renderSlackMessage');
 
 dotenv.config();
@@ -13,7 +13,7 @@ const webhook = new IncomingWebhook(url);
 const checkRandalls = async () => {
   const storesWithAppointments = [];
   const promises = texasRandalls.map((store) =>
-    fetch('https://kordinator.mhealthcoach.net/loadEventSlotDaysForCoach.do?_r=6891074633490604&csrfKey=U0_OsFJtgsfQYEGGrn_h', {
+    fetch('https://kordinator.mhealthcoach.net/loadEventSlotDaysForCoach.do?_r=7765877730547306&csrfKey=ZpK3BhU8LVcC6ASfdJHq', {
       headers: {
         'accept': 'application/json, text/plain, */*',
         'accept-language': 'en-US,en;q=0.9,es;q=0.8',
@@ -24,7 +24,7 @@ const checkRandalls = async () => {
         'sec-fetch-dest': 'empty',
         'sec-fetch-mode': 'cors',
         'sec-fetch-site': 'same-origin',
-        'cookie': '_ga=GA1.3.II0ynmRV1omFIP5gOUX-j-KMeKCWAp-LRVlRLLATRhgvdAzyMz22wxzgpAgGOvxgE8kpGwBvcHhGsBQEBVhOIfHmv7tWg-e1VLp4eyC_VGHna5iSm_upyfhf9LRGNyJj995gljFXyHt6kJEI6XiW_KbZ7jh3cql3dpcgLZVEfEoUuiD1t7TXqWHUYfrAd-h6G3fFxDpRH49xc4mp_WDEVTDk99rONRfGJ-pvh4MZ0is5UCCkpZrlo6I9J6NzaMuh; AWSALB=E/jVuCeAga7sZ+iZbP19OV8a0Q13Lci722OD49AvwQggL1hgm5FIplpK7NyKskArfSX6viLGW78xScfHuGRmQCLUOboa+qjaxnWod6moj9uVMY2jcfznuTEjgGwj; AWSALBCORS=E/jVuCeAga7sZ+iZbP19OV8a0Q13Lci722OD49AvwQggL1hgm5FIplpK7NyKskArfSX6viLGW78xScfHuGRmQCLUOboa+qjaxnWod6moj9uVMY2jcfznuTEjgGwj; _gid=GA1.3.279347536.1612241002; _gat=1; JSESSIONID=22E546E6AE7A9DA4740EC50934E0B1D4; AWSALBTG=lRAbU3iMOVvrtCz+4CM223UfsF1jTlE0+USMZscZuKCG+oFzU9oaeo8hEu0fns6LYSFcdJtMXDfQiVbB8l0s0qAUyTZFsRRr675Aze8cqhBVd/ZIMumCwP/eSekZTZa5zhVA84CqzPpVeQzJ8jETvJdwMwbG6FmrUQK0lJIoQR1wpwyswGA=; AWSALBTGCORS=lRAbU3iMOVvrtCz+4CM223UfsF1jTlE0+USMZscZuKCG+oFzU9oaeo8hEu0fns6LYSFcdJtMXDfQiVbB8l0s0qAUyTZFsRRr675Aze8cqhBVd/ZIMumCwP/eSekZTZa5zhVA84CqzPpVeQzJ8jETvJdwMwbG6FmrUQK0lJIoQR1wpwyswGA=',
+        "cookie": "_ga=GA1.3.II0ynmRV1omFIP5gOUX-j-KMeKCWAp-LRVlRLLATRhgvdAzyMz22wxzgpAgGOvxgE8kpGwBvcHhGsBQEBVhOIfHmv7tWg-e1VLp4eyC_VGHna5iSm_upyfhf9LRGNyJj995gljFXyHt6kJEI6XiW_KbZ7jh3cql3dpcgLZVEfEoUuiD1t7TXqWHUYfrAd-h6G3fFxDpRH49xc4mp_WDEVTDk99rONRfGJ-pvh4MZ0is5UCCkpZrlo6I9J6NzaMuh; _gid=GA1.3.144205805.1612231811; AWSALB=ZKJi6nlN5wW2SlQ6dvBP8qsJ3ZUkwlHp7XPHig/i9wDhWe8LcZasxKKZDKi+HHTaDOvFm9QuOHcTLZlSwH6RegTRApG2Zbph2cE2QXTUhL92AHLfmYA6vS87d5Ke; AWSALBCORS=ZKJi6nlN5wW2SlQ6dvBP8qsJ3ZUkwlHp7XPHig/i9wDhWe8LcZasxKKZDKi+HHTaDOvFm9QuOHcTLZlSwH6RegTRApG2Zbph2cE2QXTUhL92AHLfmYA6vS87d5Ke; JSESSIONID=86FC323A70D2A6222873FB0E8294B8D2; _gat=1; AWSALBTG=OllzAqAS7tjkh+RXCLLmErhihgVX2gluYW4RjNpIObv7ay1qrKKDgKSM2xxNi8ZwdFC3B5FUYqYl5k1VcsRi8XkHryl2tzNEtxtUWqo/8uw8MSlUSIW1W9/y1DbZPixY+/cfYGTKMOB0zcwa1x9+DPXtLq+cM8K3CgWafq8SkIhCPhPS8rs=; AWSALBTGCORS=OllzAqAS7tjkh+RXCLLmErhihgVX2gluYW4RjNpIObv7ay1qrKKDgKSM2xxNi8ZwdFC3B5FUYqYl5k1VcsRi8XkHryl2tzNEtxtUWqo/8uw8MSlUSIW1W9/y1DbZPixY+/cfYGTKMOB0zcwa1x9+DPXtLq+cM8K3CgWafq8SkIhCPhPS8rs="
       },
       referrer: 'https://kordinator.mhealthcoach.net/vt-kit-v2/index.html',
       referrerPolicy: 'strict-origin-when-cross-origin',
@@ -62,8 +62,4 @@ const checkRandalls = async () => {
   }
 };
 
-checkRandalls();
-
 module.exports = checkRandalls;
-
-
