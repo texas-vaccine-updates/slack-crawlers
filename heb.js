@@ -1,12 +1,12 @@
-const cron = require("node-cron");
-const express = require("express");
-const fetch = require("node-fetch");
-const dotenv = require("dotenv");
-const { IncomingWebhook } = require("@slack/webhook");
+const cron = require('node-cron');
+const express = require('express');
+const fetch = require('node-fetch');
+const dotenv = require('dotenv');
+const {IncomingWebhook} = require('@slack/webhook');
 const hebURL =
-  "https://heb-ecom-covid-vaccine.hebdigital-prd.com/vaccine_locations.json";
+  'https://heb-ecom-covid-vaccine.hebdigital-prd.com/vaccine_locations.json';
 
-const cronJobInterval = "*/2 * * * *";
+const cronJobInterval = '*/2 * * * *';
 
 app = express();
 dotenv.config();
@@ -14,71 +14,114 @@ dotenv.config();
 const url = process.env.SLACK_WEBHOOK_URL;
 const webhook = new IncomingWebhook(url);
 
-const keepaliveURL = "https://texas-vaccines.herokuapp.com/";
+const keepaliveURL = 'https://texas-vaccines.herokuapp.com/';
 
-app.get("/", function (req, res) {
-  res.send("Staying alive.");
+app.get('/', function(req, res) {
+  res.send('Staying alive.');
 });
 
-const slackMessageBlock = {
-  blocks: [
-    {
-      type: "section",
-      text: {
-        type: "mrkdwn",
-        text: "*Vaccines are available! 💉*",
-      },
-    },
-    {
-      type: "section",
-      text: {
-        type: "mrkdwn",
-        text: "Click here to schedule:",
-      },
-      accessory: {
-        type: "button",
+const renderSlackMessage = (locations) => {
+  return {
+    blocks: [
+      {
+        type: 'section',
         text: {
-          type: "plain_text",
-          text: "Schedule",
-          emoji: true,
+          type: 'mrkdwn',
+          text: '*Vaccines are available! 💉*',
         },
-        value: "vaccine",
-        url: "https://vaccine.heb.com/scheduler",
-        action_id: "button-action",
       },
-    },
-  ],
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: 'Click @here to schedule:',
+        },
+        accessory: {
+          type: 'button',
+          text: {
+            type: 'plain_text',
+            text: 'Schedule',
+            emoji: true,
+          },
+          value: 'vaccine',
+          url: 'https://vaccine.heb.com/scheduler',
+          action_id: 'button-action',
+        },
+      },
+      {
+        'type': 'divider',
+      },
+      {
+        'type': 'section',
+        'fields': locations,
+      },
+    ],
+  };
 };
 
-cron.schedule(cronJobInterval, () => {
-  try {
-    (async () => {
-      const keep = await fetch(keepaliveURL);
-      const alive = await keep.text();
-      console.log(alive);
 
-      const response = await fetch(hebURL);
-      const vaccineLocations = await response.json();
+// cron.schedule(cronJobInterval, () => {
+try {
+  (async () => {
+    const keep = await fetch(keepaliveURL);
+    const alive = await keep.text();
+    console.log(alive);
 
-      if (response.status === 200) {
-        console.log("Checking for vaccines...");
+    const response = await fetch(hebURL);
+    const vaccineLocations = await response.json();
 
-        for (const location in vaccineLocations.locations) {
-          const openTimeslot =
-            vaccineLocations.locations[location].openTimeslots;
+    if (response.status === 200) {
+      console.log('Checking for vaccines...');
+      const locationsWithVaccine = {};
 
-          if (openTimeslot !== 0) {
-            console.log("Vaccines available.");
-            await webhook.send(slackMessageBlock);
-            return;
+      for (const location in vaccineLocations.locations) {
+        if (vaccineLocations.locations.hasOwnProperty(location)) {
+          const {name, openTimeslots} = vaccineLocations.locations[location];
+
+          if (openTimeslots === 0) { // change back to !== for prod
+            console.log('Vaccines available.');
+            locationsWithVaccine[name] = openTimeslots;
           }
         }
       }
-      console.log("Done.");
-    })();
-  } catch (error) {
-    console.error(error);
-  }
-});
+
+
+      if (Object.keys(locationsWithVaccine).length === 0) {
+        console.log('No Vaccines found.');
+        return;
+      }
+
+      const slackFields = [];
+
+      for (location in locationsWithVaccine) {
+        if (locationsWithVaccine.hasOwnProperty(location)) {
+          const count = locationsWithVaccine[location];
+          console.log(`${location}: ${count}`);
+          slackFields.push({
+            'type': 'mrkdwn',
+            'text': `${location}: *${count}*`,
+          });
+        }
+      }
+
+      if (slackFields.length > 10) {
+        slackFields.length = 10; // Slack limits the number of fields to 10
+      }
+
+      const slackMessage = renderSlackMessage(slackFields);
+
+      try {
+        await webhook.send(slackMessage);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    console.log('Done.');
+  })();
+} catch (error) {
+  console.error(error);
+}
+// });
 
 app.listen(process.env.PORT);
