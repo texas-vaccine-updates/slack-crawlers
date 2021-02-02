@@ -15,7 +15,7 @@ const checkHeb = async () => {
   const vaccineLocations = await response.json();
 
   if (response.status === 200) {
-    console.log('Checking for vaccines...');
+    console.log('Checking HEB for vaccines...');
     const locationsWithVaccine = {};
 
     for (location in vaccineLocations.locations) {
