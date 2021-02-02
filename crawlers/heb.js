@@ -24,7 +24,7 @@ const checkHeb = async () => {
       if (vaccineLocations.locations.hasOwnProperty(location)) {
         const {name, openTimeslots, city} = vaccineLocations.locations[location];
 
-        if (openTimeslots !== 0) {
+        if (openTimeslots > 3) {
           locationsWithVaccine[name] = {openTimeslots, city};
         }
       }
