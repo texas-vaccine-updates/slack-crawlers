@@ -1,6 +1,5 @@
-const dotenv = require('dotenv');
 const fetch = require('node-fetch');
-
+const dotenv = require('dotenv');
 const {IncomingWebhook} = require('@slack/webhook');
 const renderSlackMessage = require('../utils/renderSlackMessage');
 const hebURL = 'https://heb-ecom-covid-vaccine.hebdigital-prd.com/vaccine_locations.json';
@@ -19,7 +18,7 @@ const checkHeb = async () => {
     console.log('Checking for vaccines...');
     const locationsWithVaccine = {};
 
-    for (const location in vaccineLocations.locations) {
+    for (location in vaccineLocations.locations) {
       if (vaccineLocations.locations.hasOwnProperty(location)) {
         const {name, openTimeslots} = vaccineLocations.locations[location];
 
