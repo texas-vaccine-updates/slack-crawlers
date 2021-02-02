@@ -3,8 +3,7 @@ const fetch = require('node-fetch');
 
 const {IncomingWebhook} = require('@slack/webhook');
 const renderSlackMessage = require('../utils/renderSlackMessage');
-const hebURL =
-  'https://heb-ecom-covid-vaccine.hebdigital-prd.com/vaccine_locations.json';
+const hebURL = 'https://heb-ecom-covid-vaccine.hebdigital-prd.com/vaccine_locations.json';
 const scheduleURL = 'https://vaccine.heb.com/scheduler';
 
 dotenv.config();

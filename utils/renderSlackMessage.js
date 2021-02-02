@@ -5,14 +5,14 @@ module.exports = (url, locations) => {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: '*Vaccines are available! 💉*',
+          text: '*@here Vaccines are available! 💉*',
         },
       },
       {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: 'Click @here to schedule:',
+          text: 'Click here to schedule:',
         },
         accessory: {
           type: 'button',
