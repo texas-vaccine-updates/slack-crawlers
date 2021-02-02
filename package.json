@@ -4,9 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev:albertsons": "nodemon albertsons.js"
+    "start": "node heb.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
@@ -20,7 +19,6 @@
   },
   "devDependencies": {
     "eslint": "^7.19.0",
-    "eslint-config-google": "^0.14.0",
-    "nodemon": "2.0.7"
+    "eslint-config-google": "^0.14.0"
   }
 }
