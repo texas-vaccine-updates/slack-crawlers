@@ -2,7 +2,7 @@ const cron = require('node-cron');
 const express = require('express');
 const fetch = require('node-fetch');
 const checkHeb = require('./crawlers/heb');
-// const checkRandalls = require('./crawlers/albertsons');
+const checkRandalls = require('./crawlers/albertsons');
 
 const cronJobInterval = '*/2 * * * *';
 
@@ -21,7 +21,7 @@ cron.schedule(cronJobInterval, async () => {
     console.log(alive);
 
     await checkHeb();
-    // await checkRandalls(); // TODO: Update _r variable and Cookie token before production.
+    await checkRandalls();
   } catch (error) {
     console.error(error);
   }
