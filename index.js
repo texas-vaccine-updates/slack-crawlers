@@ -22,8 +22,8 @@ cron.schedule(cronJobInterval, async () => {
     console.log(alive);
 
     await checkHeb();
-    await checkRandalls();
     await checkAlamodome();
+    await checkRandalls();
   } catch (error) {
     console.error(error);
   }

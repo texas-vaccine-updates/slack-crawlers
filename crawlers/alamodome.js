@@ -40,27 +40,31 @@ const staticSlackMessage = {
 
 
 const checkAlamodome = async () => {
-  (async () => {
-    console.log('Checking Alamodome for vaccines...');
-    const browser = await puppeteer.launch({
-      args: [
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-      ],
-    });
-    const page = await browser.newPage();
-    await page.goto(alamoURL);
-    await page.type('#groupCode', 'DOMECOVID');
-    await page.keyboard.press('Enter');
-    await page.waitForSelector('#schSlotsMsg');
-    const indicator = await page.$eval('#schSlotsMsg', (el) => el.innerText) || '';
+  try {
+    (async () => {
+      console.log('Checking Alamodome for vaccines...');
+      const browser = await puppeteer.launch({
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+        ],
+      });
+      const page = await browser.newPage();
+      await page.goto(alamoURL);
+      await page.type('#groupCode', 'DOMECOVID');
+      await page.keyboard.press('Enter');
+      await page.waitForSelector('#schSlotsMsg');
+      const indicator = await page.$eval('#schSlotsMsg', (el) => el.innerText) || '';
 
-    if (indicator !== 'Registration full') {
-      await webhook.send(staticSlackMessage);
-    }
+      if (indicator !== 'Registration full') {
+        await webhook.send(staticSlackMessage);
+      }
 
-    await browser.close();
-  })();
+      await browser.close();
+    })();
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 module.exports = checkAlamodome;

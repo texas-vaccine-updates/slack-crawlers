@@ -13,48 +13,52 @@ const webhook = new IncomingWebhook(url);
 const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 
 const checkHeb = async () => {
-  console.log('Checking HEB for vaccines...');
-  const response = await fetch(hebURL);
-  const vaccineLocations = await response.json();
+  try {
+    console.log('Checking HEB for vaccines...');
+    const response = await fetch(hebURL);
+    const vaccineLocations = await response.json();
 
-  if (response.status === 200) {
-    const locationsWithVaccine = {};
+    if (response.status === 200) {
+      const locationsWithVaccine = {};
 
-    for (location in vaccineLocations.locations) {
-      if (vaccineLocations.locations.hasOwnProperty(location)) {
-        const {name, openTimeslots, city} = vaccineLocations.locations[location];
+      for (location in vaccineLocations.locations) {
+        if (vaccineLocations.locations.hasOwnProperty(location)) {
+          const {name, openTimeslots, city} = vaccineLocations.locations[location];
 
-        if (openTimeslots > 3) {
-          locationsWithVaccine[name] = {openTimeslots, city};
+          if (openTimeslots > 3) {
+            locationsWithVaccine[name] = {openTimeslots, city};
+          }
         }
       }
-    }
 
-    if (Object.keys(locationsWithVaccine).length === 0) {
-      return;
-    }
+      if (Object.keys(locationsWithVaccine).length === 0) {
+        return;
+      }
 
-    const slackFields = [];
+      const slackFields = [];
 
-    for (location in locationsWithVaccine) {
-      if (locationsWithVaccine.hasOwnProperty(location)) {
-        const {openTimeslots, city} = locationsWithVaccine[location];
-        const capitalizedCity = capitalizeFirstLetter(city);
-        slackFields.push({
-          type: 'mrkdwn',
-          text: `${location}:  *${openTimeslots}* \n${capitalizedCity}`,
-        });
+      for (location in locationsWithVaccine) {
+        if (locationsWithVaccine.hasOwnProperty(location)) {
+          const {openTimeslots, city} = locationsWithVaccine[location];
+          const capitalizedCity = capitalizeFirstLetter(city);
+          slackFields.push({
+            type: 'mrkdwn',
+            text: `${location}:  *${openTimeslots}* \n${capitalizedCity}`,
+          });
+        }
+      }
+
+      if (slackFields.length > 10) {
+        slackFields.length = 10; // Slack limits the number of fields to 10
+      }
+
+      if (slackFields.length > 0) {
+        const slackMessage = renderSlackMessage(scheduleURL, slackFields);
+        await webhook.send(slackMessage);
       }
     }
-
-    if (slackFields.length > 10) {
-      slackFields.length = 10; // Slack limits the number of fields to 10
-    }
-
-    if (slackFields.length > 0) {
-      const slackMessage = renderSlackMessage(scheduleURL, slackFields);
-      await webhook.send(slackMessage);
-    }
+  } catch (e) {
+    console.error(e);
   }
 };
 
