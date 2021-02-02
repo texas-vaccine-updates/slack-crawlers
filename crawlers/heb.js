@@ -1,15 +1,15 @@
-const dotenv = require("dotenv");
-const fetch = require("node-fetch");
+const dotenv = require('dotenv');
+const fetch = require('node-fetch');
 
-const { IncomingWebhook } = require("@slack/webhook");
-const renderSlackMessage = require("./utils/renderSlackMessage");
+const {IncomingWebhook} = require('@slack/webhook');
+const renderSlackMessage = require('../utils/renderSlackMessage');
 const hebURL =
-  "https://heb-ecom-covid-vaccine.hebdigital-prd.com/vaccine_locations.json";
-const scheduleURL = "https://vaccine.heb.com/scheduler";
+  'https://heb-ecom-covid-vaccine.hebdigital-prd.com/vaccine_locations.json';
+const scheduleURL = 'https://vaccine.heb.com/scheduler';
 
 dotenv.config();
 
-const url = process.env.SLACK_WEBHOOK_URL;
+const url = process.env.HEB_WEBHOOK_URL;
 const webhook = new IncomingWebhook(url);
 
 const checkHeb = async () => {
@@ -17,12 +17,12 @@ const checkHeb = async () => {
   const vaccineLocations = await response.json();
 
   if (response.status === 200) {
-    console.log("Checking for vaccines...");
+    console.log('Checking for vaccines...');
     const locationsWithVaccine = {};
 
     for (const location in vaccineLocations.locations) {
       if (vaccineLocations.locations.hasOwnProperty(location)) {
-        const { name, openTimeslots } = vaccineLocations.locations[location];
+        const {name, openTimeslots} = vaccineLocations.locations[location];
 
         if (openTimeslots !== 0) {
           locationsWithVaccine[name] = openTimeslots;
@@ -31,7 +31,7 @@ const checkHeb = async () => {
     }
 
     if (Object.keys(locationsWithVaccine).length === 0) {
-      console.log("No Vaccines found.");
+      console.log('No Vaccines found.');
       return;
     }
 
@@ -42,7 +42,7 @@ const checkHeb = async () => {
         const count = locationsWithVaccine[location];
 
         slackFields.push({
-          type: "mrkdwn",
+          type: 'mrkdwn',
           text: `${location}: *${count}*`,
         });
       }
@@ -52,11 +52,13 @@ const checkHeb = async () => {
       slackFields.length = 10; // Slack limits the number of fields to 10
     }
 
-    const slackMessage = renderSlackMessage(scheduleURL, slackFields);
-    await webhook.send(slackMessage);
+    if (slackFields.length > 0) {
+      const slackMessage = renderSlackMessage(scheduleURL, slackFields);
+      await webhook.send(slackMessage);
+    }
   }
 
-  console.log("Done.");
+  console.log('Done.');
 };
 
 module.exports = checkHeb;

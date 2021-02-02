@@ -1,17 +1,17 @@
-const cron = require("node-cron");
-const express = require("express");
-const fetch = require("node-fetch");
-const checkHeb = require("./heb");
-const checkRandalls = require("./albertsons");
+const cron = require('node-cron');
+const express = require('express');
+const fetch = require('node-fetch');
+const checkHeb = require('./crawlers/heb');
+// const checkRandalls = require('./crawlers/albertsons');
 
-const cronJobInterval = "*/2 * * * *";
+const cronJobInterval = '*/2 * * * *';
 
 app = express();
 
-const keepaliveURL = "https://texas-vaccines.herokuapp.com/";
+const keepaliveURL = 'https://texas-vaccines.herokuapp.com/';
 
-app.get("/", function (req, res) {
-  res.send("Staying alive.");
+app.get('/', function(req, res) {
+  res.send('Staying alive.');
 });
 
 cron.schedule(cronJobInterval, async () => {
@@ -21,7 +21,7 @@ cron.schedule(cronJobInterval, async () => {
     console.log(alive);
 
     await checkHeb();
-    await checkRandalls();
+    // await checkRandalls(); // TODO: Update _r variable and Cookie token before production.
   } catch (error) {
     console.error(error);
   }

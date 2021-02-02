@@ -2,35 +2,35 @@ module.exports = (url, locations) => {
   return {
     blocks: [
       {
-        type: "section",
+        type: 'section',
         text: {
-          type: "mrkdwn",
-          text: "*Vaccines are available! 💉*",
+          type: 'mrkdwn',
+          text: '*Vaccines are available! 💉*',
         },
       },
       {
-        type: "section",
+        type: 'section',
         text: {
-          type: "mrkdwn",
-          text: "Click @here to schedule:",
+          type: 'mrkdwn',
+          text: 'Click @here to schedule:',
         },
         accessory: {
-          type: "button",
+          type: 'button',
           text: {
-            type: "plain_text",
-            text: "Schedule",
+            type: 'plain_text',
+            text: 'Schedule',
             emoji: true,
           },
-          value: "vaccine",
+          value: 'vaccine',
           url,
-          action_id: "button-action",
+          action_id: 'button-action',
         },
       },
       {
-        type: "divider",
+        type: 'divider',
       },
       {
-        type: "section",
+        type: 'section',
         fields: locations,
       },
     ],
