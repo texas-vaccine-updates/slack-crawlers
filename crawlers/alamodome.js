@@ -42,7 +42,12 @@ const staticSlackMessage = {
 const checkAlamodome = async () => {
   (async () => {
     console.log('Checking Alamodome for vaccines...');
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+      ],
+    });
     const page = await browser.newPage();
     await page.goto(alamoURL);
     await page.type('#groupCode', 'DOMECOVID');
