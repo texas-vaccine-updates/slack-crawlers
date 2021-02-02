@@ -1,5 +1,17 @@
 # texas-vaccines
 
+## Install
+```bash
+npm install
+```
+
+## Run
+```bash
+npm start
+```
+
+# HEB 
+
 To consume HEBs COVID vaccine API send a `GET` request to:
 ```bash
 https://heb-ecom-covid-vaccine.hebdigital-prd.com/vaccine_locations.json
