@@ -20,10 +20,10 @@ const checkHeb = async () => {
 
     for (location in vaccineLocations.locations) {
       if (vaccineLocations.locations.hasOwnProperty(location)) {
-        const {name, openTimeslots} = vaccineLocations.locations[location];
+        const {name, openTimeslots, city} = vaccineLocations.locations[location];
 
         if (openTimeslots !== 0) {
-          locationsWithVaccine[name] = openTimeslots;
+          locationsWithVaccine[name] = {openTimeslots, city};
         }
       }
     }
@@ -37,11 +37,11 @@ const checkHeb = async () => {
 
     for (location in locationsWithVaccine) {
       if (locationsWithVaccine.hasOwnProperty(location)) {
-        const count = locationsWithVaccine[location];
+        const {openTimeslots, city} = locationsWithVaccine[location];
 
         slackFields.push({
           type: 'mrkdwn',
-          text: `${location}: *${count}*`,
+          text: `${location}: *${openTimeslots}* \n${city}`,
         });
       }
     }
