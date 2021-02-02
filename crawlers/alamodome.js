@@ -41,7 +41,8 @@ const staticSlackMessage = {
 
 const checkAlamodome = async () => {
   (async () => {
-    const browser = await puppeteer.launch({headless: false});
+    console.log('Checking Alamodome for vaccines...');
+    const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto(alamoURL);
     await page.type('#groupCode', 'DOMECOVID');

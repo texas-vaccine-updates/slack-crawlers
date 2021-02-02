@@ -11,11 +11,11 @@ const url = process.env.HEB_WEBHOOK_URL;
 const webhook = new IncomingWebhook(url);
 
 const checkHeb = async () => {
+  console.log('Checking HEB for vaccines...');
   const response = await fetch(hebURL);
   const vaccineLocations = await response.json();
 
   if (response.status === 200) {
-    console.log('Checking HEB for vaccines...');
     const locationsWithVaccine = {};
 
     for (location in vaccineLocations.locations) {
@@ -29,7 +29,6 @@ const checkHeb = async () => {
     }
 
     if (Object.keys(locationsWithVaccine).length === 0) {
-      console.log('No Vaccines found.');
       return;
     }
 
@@ -55,8 +54,6 @@ const checkHeb = async () => {
       await webhook.send(slackMessage);
     }
   }
-
-  console.log('Done.');
 };
 
 module.exports = checkHeb;
