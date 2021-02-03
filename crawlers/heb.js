@@ -10,8 +10,6 @@ dotenv.config();
 const url = process.env.HEB_WEBHOOK_URL;
 const webhook = new IncomingWebhook(url);
 
-const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-
 const checkHeb = async () => {
   try {
     console.log('Checking HEB for vaccines...');
@@ -40,10 +38,9 @@ const checkHeb = async () => {
       for (location in locationsWithVaccine) {
         if (locationsWithVaccine.hasOwnProperty(location)) {
           const {openTimeslots, city} = locationsWithVaccine[location];
-          const capitalizedCity = capitalizeFirstLetter(city);
           slackFields.push({
             type: 'mrkdwn',
-            text: `${location}:  *${openTimeslots}* \n${capitalizedCity}`,
+            text: `${location}:  *${openTimeslots}* \n${city}`,
           });
         }
       }
