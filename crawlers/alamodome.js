@@ -54,7 +54,7 @@ const checkAlamodome = async () => {
       await page.type('#groupCode', 'DOMECOVID');
       await page.keyboard.press('Enter');
       await page.waitForSelector('#schSlotsMsg');
-      const indicator = await page.$eval('#schSlotsMsg', (el) => el.innerText) || '';
+      const indicator = await page.$eval('#schSlotsMsg', (el) => el.innerText);
 
       if (indicator !== 'Registration full') {
         await webhook.send(staticSlackMessage);
