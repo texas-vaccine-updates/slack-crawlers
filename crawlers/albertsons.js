@@ -14,7 +14,7 @@ const checkRandalls = async () => {
   console.log('Checking Randalls for vaccines...');
   const storesWithAppointments = [];
   const promises = texasRandalls.map((store) =>
-    fetch('https://kordinator.mhealthcoach.net/loadEventSlotDaysForCoach.do?_r=30431603105973926&csrfKey=LK55Si2nXh6dxe5nweH9', {
+    fetch('https://kordinator.mhealthcoach.net/loadEventSlotDaysForCoach.do?_r=5959539937451845&csrfKey=r9pl_2bJO1eF1dBdhx8', {
       headers: {
         'accept': 'application/json, text/plain, */*',
         'accept-language': 'en-US,en;q=0.9,es;q=0.8',
@@ -25,7 +25,7 @@ const checkRandalls = async () => {
         'sec-fetch-dest': 'empty',
         'sec-fetch-mode': 'cors',
         'sec-fetch-site': 'same-origin',
-        'cookie': '_ga=GA1.3.II0ynmRV1omFIP5gOUX-j-KMeKCWAp-LRVlRLLATRhgvdAzyMz22wxzgpAgGOvxgE8kpGwBvcHhGsBQEBVhOIfHmv7tWg-e1VLp4eyC_VGHna5iSm_upyfhf9LRGNyJj995gljFXyHt6kJEI6XiW_KbZ7jh3cql3dpcgLZVEfEoUuiD1t7TXqWHUYfrAd-h6G3fFxDpRH49xc4mp_WDEVTDk99rONRfGJ-pvh4MZ0is5UCCkpZrlo6I9J6NzaMuh; _gid=GA1.3.279347536.1612241002; AWSALB=hgsS+U7Dlq3c+PdJNDwtRcwhuQLl3YvZRHBxGYvJyK83Yr4LbQoWRKc970jiCsJ/IWQEbHACqlJpUozdq8lI3Y4ysOPs9Kle2AecuwoPKm3fvB4HIAInSaUxk7eD; AWSALBCORS=hgsS+U7Dlq3c+PdJNDwtRcwhuQLl3YvZRHBxGYvJyK83Yr4LbQoWRKc970jiCsJ/IWQEbHACqlJpUozdq8lI3Y4ysOPs9Kle2AecuwoPKm3fvB4HIAInSaUxk7eD; JSESSIONID=9790E175581B05B00AC4E68AAC133861; _gat=1; AWSALBTG=UfeELEbIrueIv0kuhdAGfv/PExjSpu+yiL5H9hS3zQtKmD6sUimljVPMr1O0gUcJHMHkpw2aNU3TCDeQlG0OFWF5lLCjnVl6Za3ogf/ivxdkhIrxW0DixXYEt110+WyTiZb1g5ukK8CuwyAYc6sO8GHuXIbswFYPMPFMgNrkY+XW0iH7n1I=; AWSALBTGCORS=UfeELEbIrueIv0kuhdAGfv/PExjSpu+yiL5H9hS3zQtKmD6sUimljVPMr1O0gUcJHMHkpw2aNU3TCDeQlG0OFWF5lLCjnVl6Za3ogf/ivxdkhIrxW0DixXYEt110+WyTiZb1g5ukK8CuwyAYc6sO8GHuXIbswFYPMPFMgNrkY+XW0iH7n1I=',
+        'cookie': '_ga=GA1.3.II0ynmRV1omFIP5gOUX-j-KMeKCWAp-LRVlRLLATRhgvdAzyMz22wxzgpAgGOvxgE8kpGwBvcHhGsBQEBVhOIfHmv7tWg-e1VLp4eyC_VGHna5iSm_upyfhf9LRGNyJj995gljFXyHt6kJEI6XiW_KbZ7jh3cql3dpcgLZVEfEoUuiD1t7TXqWHUYfrAd-h6G3fFxDpRH49xc4mp_WDEVTDk99rONRfGJ-pvh4MZ0is5UCCkpZrlo6I9J6NzaMuh; _gid=GA1.3.279347536.1612241002; JSESSIONID=09D48121AEA538F9822693D883F1CAD0; _gat=1; AWSALBTG=MNGzimvr/948lCii5AKgqgMqqrNAV+MeICBNBdZ7ipohNP+XwpqLqjB/g2ZOJMnJw2LzlEPO8L9F9UlZ+G2boXuvaC6cWFmdaBHUsSZoEu7u2ZHHD84zQhMHJAe70JH5VadxLmIOB3w1o7F4pC6hfQCnVyhIH/2DwDUpU+dWXClMw8TaEC8=; AWSALBTGCORS=MNGzimvr/948lCii5AKgqgMqqrNAV+MeICBNBdZ7ipohNP+XwpqLqjB/g2ZOJMnJw2LzlEPO8L9F9UlZ+G2boXuvaC6cWFmdaBHUsSZoEu7u2ZHHD84zQhMHJAe70JH5VadxLmIOB3w1o7F4pC6hfQCnVyhIH/2DwDUpU+dWXClMw8TaEC8=; AWSALB=TbL8BpEVankHHDfVo17xD/mNlIYL/lgnzfThGpAw7XBu5a8czfQQs0EntwvCQ0NpLDz2ND+QvYTvc29EVPjJDFkLPgrPcJUSbhx7XPP0kJzbwcA0ldCE0O4lX3BT; AWSALBCORS=TbL8BpEVankHHDfVo17xD/mNlIYL/lgnzfThGpAw7XBu5a8czfQQs0EntwvCQ0NpLDz2ND+QvYTvc29EVPjJDFkLPgrPcJUSbhx7XPP0kJzbwcA0ldCE0O4lX3BT',
       },
       referrer: 'https://kordinator.mhealthcoach.net/vt-kit-v2/index.html',
       referrerPolicy: 'strict-origin-when-cross-origin',
