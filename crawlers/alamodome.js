@@ -21,7 +21,7 @@ const staticSlackMessage = {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: 'Click here to schedule:',
+        text: 'Click here to schedule using code `DOMECOVID`:',
       },
       accessory: {
         type: 'button',
