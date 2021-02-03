@@ -12,6 +12,11 @@ npm install
 npm start
 ```
 
+### Test
+```bash
+npm test
+```
+
 You will need a `.env` file that looks something like this:
 ```
 NODE_ENV=development
