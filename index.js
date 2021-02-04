@@ -3,7 +3,7 @@ const cron = require('node-cron');
 const fetch = require('node-fetch');
 const checkHeb = require('./crawlers/heb');
 const checkFHS = require('./crawlers/fhs');
-// const checkRandalls = require('./crawlers/albertsons');
+const checkRandalls = require('./crawlers/albertsons');
 const checkAlamodome = require('./crawlers/alamodome');
 const checkBellCounty = require('./crawlers/bell-county');
 
@@ -27,7 +27,7 @@ cron.schedule(cronJobInterval, async () => {
     await checkAlamodome();
     await checkBellCounty();
     await checkFHS();
-    // await checkRandalls(); Commented out for now. Must update cookie around every 8 hours.
+    await checkRandalls();
   } catch (error) {
     console.error(error);
   }
