@@ -75,5 +75,5 @@ const checkAlamodome = async () => {
     console.error(e);
   }
 };
-checkAlamodome();
+
 module.exports = checkAlamodome;
