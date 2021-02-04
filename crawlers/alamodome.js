@@ -43,6 +43,7 @@ const checkAlamodome = async () => {
   try {
     (async () => {
       console.log('Checking Alamodome for vaccines...');
+      let indicator = '';
       const browser = await puppeteer.launch({
         args: [
           '--no-sandbox',
@@ -53,8 +54,12 @@ const checkAlamodome = async () => {
       await page.goto(alamoURL);
       await page.type('#groupCode', 'DOMECOVID');
       await page.keyboard.press('Enter');
-      await page.waitForSelector('#schSlotsMsg');
-      const indicator = await page.$eval('#schSlotsMsg', (el) => el.innerText);
+      try {
+        await page.waitForSelector('#schSlotsMsg');
+        indicator = await page.$eval('#schSlotsMsg', (el) => el.innerText);
+      } catch (e) {
+        console.error(e);
+      }
 
       if (indicator !== 'Registration full') {
         await webhook.send(staticSlackMessage);
