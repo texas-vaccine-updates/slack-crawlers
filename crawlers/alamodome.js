@@ -42,24 +42,28 @@ const staticSlackMessage = {
 const checkAlamodome = async () => {
   try {
     (async () => {
+      let indicator;
       console.log('Checking Alamodome for vaccines...');
-      let indicator = '';
       const browser = await puppeteer.launch({
         args: [
           '--no-sandbox',
           '--disable-setuid-sandbox',
         ],
       });
-      const page = await browser.newPage();
-      await page.goto(alamoURL);
-      await page.type('#groupCode', 'DOMECOVID');
-      await page.keyboard.press('Enter');
       try {
+        const page = await browser.newPage();
+        await page.goto(alamoURL, {
+          waitUntil: 'networkidle0',
+        });
+        await page.waitForSelector('#groupCode');
+        await page.type('#groupCode', 'DOMECOVID');
+        await page.keyboard.press('Enter');
         await page.waitForSelector('#schSlotsMsg');
         indicator = await page.$eval('#schSlotsMsg', (el) => el.innerText);
       } catch (e) {
         console.error(e);
       }
+
 
       if (indicator !== 'Registration full') {
         await webhook.send(staticSlackMessage);
@@ -71,5 +75,5 @@ const checkAlamodome = async () => {
     console.error(e);
   }
 };
-
+checkAlamodome();
 module.exports = checkAlamodome;
