@@ -41,6 +41,7 @@ const staticSlackMessage = {
 
 
 const checkFHS = async () => {
+  console.log('Checking FHS for vaccines...');
   try {
     let vaccineData;
     (async () => {
