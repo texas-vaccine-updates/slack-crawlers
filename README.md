@@ -1,4 +1,7 @@
-# texas-vaccines
+<img height="100" alt="portfolio_view" src="https://github.com/jameskip/texas-vaccines/blob/main/IMG_0339.JPG">
+
+# Texas Vaccine Updates
+
 
 If you would like to contribute a crawler just follow the folder structure and add your file to `crawlers/`
 
