@@ -45,6 +45,13 @@ const month = ('0' + (date.getMonth() + 1)).slice(-2);
 const year = date.getFullYear();
 const dateString = `${year}-${month}-${day}`;
 
+const futureDate = new Date();
+futureDate.setDate(futureDate.getDate() + 14);
+const futureDay = ('0' + futureDate.getDate()).slice(-2);
+const futureMonth = ('0' + (futureDate.getMonth() + 1)).slice(-2);
+const futureYear = futureDate.getFullYear();
+const futureDateString = `${futureYear}-${futureMonth}-${futureDay}`;
+
 const options = {
   'headers': {
     '__requestverificationtoken': 'zy7tT6_RTbuyTD4SGHXH8x3sG6yD3r7Eera3OsdabZy8QbJ20FEAv6YE5wJwXsa8JBbHhBcFwMngmeVHGkSwiyAu0-w1',
@@ -59,7 +66,7 @@ const options = {
   },
   'referrer': 'https://mychart-openscheduling.et1130.epichosted.com/MyChart/SignupAndSchedule/EmbeddedSchedule?id=51748&dept=10554003&vt=1788&view=grouped',
   'referrerPolicy': 'same-origin',
-  'body': `id=51748&vt=1788&dept=10554003&view=grouped&start=${dateString}&filters=%7B%22Providers%22%3A%7B%2251748%22%3Atrue%7D%2C%22Departments%22%3A%7B%2210554003%22%3Atrue%7D%2C%22DaysOfWeek%22%3A%7B%220%22%3Atrue%2C%221%22%3Atrue%2C%222%22%3Atrue%2C%223%22%3Atrue%2C%224%22%3Atrue%2C%225%22%3Atrue%2C%226%22%3Atrue%7D%2C%22TimesOfDay%22%3A%22both%22%7D`,
+  'body': `id=51748&vt=1788&dept=10554003&view=grouped&start=${dateString}&end=${futureDateString}&filters=%7B%22Providers%22%3A%7B%2251748%22%3Atrue%7D%2C%22Departments%22%3A%7B%2210554003%22%3Atrue%7D%2C%22DaysOfWeek%22%3A%7B%220%22%3Atrue%2C%221%22%3Atrue%2C%222%22%3Atrue%2C%223%22%3Atrue%2C%224%22%3Atrue%2C%225%22%3Atrue%2C%226%22%3Atrue%7D%2C%22TimesOfDay%22%3A%22both%22%7D`,
   'method': 'POST',
   'mode': 'cors',
 };
@@ -84,7 +91,7 @@ const checkUniversity = async () => {
       } catch (e) {
         console.error(e);
       }
-
+      console.log(data);
       if (!isEmpty(data.AllDays)) {
         await webhook.send(staticSlackMessage);
       }
