@@ -91,7 +91,6 @@ const checkUniversity = async () => {
       } catch (e) {
         console.error(e);
       }
-      console.log(data);
       if (!isEmpty(data.AllDays)) {
         await webhook.send(staticSlackMessage);
       }
