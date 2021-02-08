@@ -4,7 +4,7 @@ const fetch = require('node-fetch');
 const checkHeb = require('./crawlers/heb');
 const checkFHS = require('./crawlers/fhs');
 const checkRandalls = require('./crawlers/albertsons');
-const checkAlamodome = require('./crawlers/alamodome');
+// const checkAlamodome = require('./crawlers/alamodome');
 const checkBellCounty = require('./crawlers/bell-county');
 const checkUniversity = require('./crawlers/university');
 
@@ -27,7 +27,7 @@ cron.schedule(cronJobInterval, async () => {
     await checkHeb();
     await checkBellCounty();
     await checkFHS();
-    await checkAlamodome();
+    // await checkAlamodome();
     await checkUniversity();
     await checkRandalls();
   } catch (error) {
