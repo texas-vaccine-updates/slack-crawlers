@@ -64,8 +64,13 @@ const checkAlamodome = async () => {
         console.error(e);
       }
 
+      const date = new Date();
+      const hour = date.getUTCHours();
+      const minute = date.getUTCMinutes();
 
-      if (indicator !== 'Registration full') {
+      const isFalseAlarm = hour === 11 && minute < 30;
+
+      if ((indicator !== 'Registration full') && !isFalseAlarm) {
         await webhook.send(staticSlackMessage);
       }
 
