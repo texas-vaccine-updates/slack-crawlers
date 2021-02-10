@@ -48,7 +48,6 @@ const checkRandalls = async () => {
     ).then(async (res) => {
       try {
         result = await res.json();
-        console.log(result);
       } catch (e) {
         console.log(e);
       }
