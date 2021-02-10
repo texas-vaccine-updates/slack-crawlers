@@ -37,11 +37,11 @@ const checkHeb = async () => {
 
       for (location in locationsWithVaccine) {
         if (locationsWithVaccine.hasOwnProperty(location)) {
-          const {openTimeslots, city} = locationsWithVaccine[location];
+          const {openTimeslots, city, url} = locationsWithVaccine[location];
           slackFields.push({
             type: 'mrkdwn',
 
-            text: `${location}:  *${openTimeslots}* \n${city}`,
+            text: `${location}:  *${openTimeslots}* \n${city} \n<${url}|Book Appointment>`,
           });
         }
       }
