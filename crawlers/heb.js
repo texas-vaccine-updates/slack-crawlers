@@ -40,7 +40,6 @@ const checkHeb = async () => {
           const {openTimeslots, city, url} = locationsWithVaccine[location];
           slackFields.push({
             type: 'mrkdwn',
-
             text: `<${url}|${location}>:  *${openTimeslots}* \n${city}`,
           });
         }
