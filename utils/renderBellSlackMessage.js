@@ -4,15 +4,17 @@ module.exports = (url, location) => {
       {
         type: 'section',
         text: {
-          type: 'mrkdwn',
-          text: `*Vaccines are available in ${location} 💉 @channel*`,
+          type: 'plain_text',
+          text: `Vaccines are available in ${location} 💉 @channel`,
+          emoji: true,
         },
       },
       {
         type: 'section',
         text: {
-          type: 'mrkdwn',
+          type: 'plain_text',
           text: 'Click here to schedule:',
+          emoji: true,
         },
         accessory: {
           type: 'button',

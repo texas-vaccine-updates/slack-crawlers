@@ -39,8 +39,9 @@ const checkHeb = async () => {
         if (locationsWithVaccine.hasOwnProperty(location)) {
           const {openTimeslots, city} = locationsWithVaccine[location];
           slackFields.push({
-            type: 'mrkdwn',
+            type: 'plain_text',
             text: `${location}:  *${openTimeslots}* \n${city}`,
+            emoji: true,
           });
         }
       }
