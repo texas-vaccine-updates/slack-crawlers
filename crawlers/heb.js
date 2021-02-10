@@ -40,8 +40,12 @@ const checkHeb = async () => {
           const {openTimeslots, city} = locationsWithVaccine[location];
           slackFields.push({
             type: 'mrkdwn',
+<<<<<<< HEAD
             text: `${location}:  ${openTimeslots} \n${city}`,
 
+=======
+            text: `${location}:  *${openTimeslots}* \n${city}`,
+>>>>>>> parent of f3a4318... Merge pull request #20 from jameskip/swtich-to-plain-text
           });
         }
       }

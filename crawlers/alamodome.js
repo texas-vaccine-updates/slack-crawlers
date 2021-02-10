@@ -14,17 +14,15 @@ const staticSlackMessage = {
     {
       type: 'section',
       text: {
-        type: 'plain_text',
-        text: 'Vaccines are available! 💉 @channel',
-        emoji: true,
+        type: 'mrkdwn',
+        text: '*Vaccines are available! 💉 @channel*',
       },
     },
     {
       type: 'section',
       text: {
-        type: 'plain_text',
+        type: 'mrkdwn',
         text: 'Click here to schedule using code `DOMECOVID`:',
-        emoji: true,
       },
       accessory: {
         type: 'button',
