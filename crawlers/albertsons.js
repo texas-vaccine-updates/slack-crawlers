@@ -52,8 +52,9 @@ const checkRandalls = async () => {
   await Promise.allSettled(promises);
   const slackFields = storesWithAppointments.map((store) => {
     return {
-      type: 'mrkdwn',
+      type: 'plain_text',
       text: store.name,
+      emoji: true,
     };
   });
 
