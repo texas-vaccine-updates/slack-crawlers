@@ -69,11 +69,11 @@ const checkBellCounty = async () => {
     const killeenBookableItems = killeen.value.StaffBookabilities[0].BookableItems;
     const templeBookableItems = temple.value.StaffBookabilities[0].BookableItems;
 
-    if (killeenBookableItems.length > 0) {
+    if (killeenBookableItems.length > 1) {
       const slackMessage = renderBellSlackMessage(killeenScheduleURL, 'Killeen');
       await webhook.send(slackMessage);
     }
-    if (templeBookableItems.length > 0) {
+    if (templeBookableItems.length > 1) {
       const slackMessage = renderBellSlackMessage(templeScheduleURL, 'Temple');
       await webhook.send(slackMessage);
     }
