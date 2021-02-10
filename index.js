@@ -8,7 +8,7 @@ const checkAlamodome = require('./crawlers/alamodome');
 const checkBellCounty = require('./crawlers/bell-county');
 const checkUniversity = require('./crawlers/university');
 
-const cronJobInterval = '*/2 * * * *';
+const cronJobInterval = '*/1 * * * *';
 
 app = express();
 
