@@ -56,7 +56,6 @@ const options = {
   'mode': 'cors',
 };
 
-
 const checkAlamodome = async () => {
   console.log('Checking Alamodome for vaccines...');
   try {
