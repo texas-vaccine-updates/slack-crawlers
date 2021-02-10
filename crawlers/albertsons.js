@@ -65,7 +65,7 @@ const checkRandalls = async () => {
       text: store.name,
     };
   });
-  console.log('heyyyy');
+
   if (slackFields.length > 10) {
     slackFields.length = 10; // Slack limits the number of fields to 10
   }
