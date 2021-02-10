@@ -51,7 +51,6 @@ const checkFHS = async () => {
       } catch (e) {
         console.error(e);
       }
-      console.log(disabledDates.dates.length);
       if (disabledDates.dates.length < 80) {
         await webhook.send(staticSlackMessage);
       }
