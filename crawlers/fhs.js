@@ -61,6 +61,4 @@ const checkFHS = async () => {
   }
 };
 
-checkFHS();
-
 module.exports = checkFHS;
