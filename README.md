@@ -32,4 +32,4 @@ BELL_WEBHOOK_URL=https://hooks.slack.com/services/BLAHBLAHBLAHBLAHBLAHBLAHBLAHBL
 FHS_WEBHOOK_URL=https://hooks.slack.com/services/BLAHBLAHBLAHBLAHBLAHBLAHBLAHBLAHBLAHBLAHBLAH
 UNIVERSITY_WEBHOOK_URL=https://hooks.slack.com/services/BLAHBLAHBLAHBLAHBLAHBLAHBLAHBLAHBLAHBLAHBLAH
 ```
-The above webhooks all point to our `#__test_channel__` in Slack.
+Join the `#__test_channel__` in Slack to get working webhook URLs.
