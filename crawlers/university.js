@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
 const dotenv = require('dotenv');
 const {IncomingWebhook} = require('@slack/webhook');
+const renderStaticSlackMessage = require('../utils/renderStaticSlackMessage');
 const universityURL = 'https://mychart-openscheduling.et1130.epichosted.com/MyChart/SignupAndSchedule/EmbeddedSchedule?id=51748&dept=10554003&vt=1788&view=grouped';
 const universityAPI = 'https://mychart-openscheduling.et1130.epichosted.com/MyChart/OpenScheduling/OpenScheduling/GetOpeningsForProvider';
 
@@ -8,36 +9,6 @@ dotenv.config();
 
 const url = process.env.UNIVERSITY_WEBHOOK_URL;
 const webhook = new IncomingWebhook(url);
-
-const staticSlackMessage = {
-  blocks: [
-    {
-      type: 'section',
-      text: {
-        type: 'mrkdwn',
-        text: '*Vaccines are available! 💉 @channel*',
-      },
-    },
-    {
-      type: 'section',
-      text: {
-        type: 'mrkdwn',
-        text: 'Click here to schedule:',
-      },
-      accessory: {
-        type: 'button',
-        text: {
-          type: 'plain_text',
-          text: 'Schedule',
-          emoji: true,
-        },
-        value: 'vaccine',
-        url: universityURL,
-        action_id: 'button-action',
-      },
-    },
-  ],
-};
 
 const date = new Date();
 const day = ('0' + date.getDate()).slice(-2);
@@ -92,7 +63,7 @@ const checkUniversity = async () => {
         console.error(e);
       }
       if (!isEmpty(data.AllDays)) {
-        await webhook.send(staticSlackMessage);
+        await webhook.send(renderStaticSlackMessage(universityURL));
       }
     })();
   } catch (e) {
