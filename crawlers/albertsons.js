@@ -26,7 +26,7 @@ const checkRandalls = async () => {
 
   const storesWithAppointments = [];
   const promises = texasRandalls.map((store) =>
-    fetch(`https://kordinator.mhealthcoach.net/loadEventSlotDaysForCoach.do?_r=$8996978612546209&csrfKey=${csrfKey}`, {
+    fetch(`https://kordinator.mhealthcoach.net/loadEventSlotDaysForCoach.do?_r=8996978612546209&csrfKey=${csrfKey}`, {
       headers: {
         'accept': 'application/json, text/plain, */*',
         'accept-language': 'en-US,en;q=0.9,es;q=0.8',
