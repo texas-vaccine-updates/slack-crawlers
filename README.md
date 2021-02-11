@@ -20,14 +20,16 @@ npm start
 npm test
 ```
 
-You will need a `.env` file that looks something like this:
+Here is a `.env` file that will get you up and running. Just save it as `.env` in this project.
 ```
 NODE_ENV=development
 PORT=666
-SLACK_WEBHOOK_URL=https://hooks.slack.com/services/blahblahblahblahblahblah
-HEB_WEBHOOK_URL=https://hooks.slack.com/services/blahblahblahblahblahblah
-ALBERTSONS_WEBHOOK_URL=https://hooks.slack.com/services/blahblahblahblahblahblah
-ALAMO_WEBHOOK_URL=https://hooks.slack.com/services/blahblahblahblahblahblah
-FHS_WEBHOOK_URL=https://hooks.slack.com/services/blahblahblahblahblahblah
+SLACK_WEBHOOK_URL=https://hooks.slack.com/services/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
+HEB_WEBHOOK_URL=https://hooks.slack.com/services/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
+ALBERTSONS_WEBHOOK_URL=https://hooks.slack.com/services/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
+ALAMO_WEBHOOK_URL=https://hooks.slack.com/services/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
+BELL_WEBHOOK_URL=https://hooks.slack.com/services/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
+FHS_WEBHOOK_URL=https://hooks.slack.com/services/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
+UNIVERSITY_WEBHOOK_URL=https://hooks.slack.com/services/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
 ```
-You can use our testing webhook in channel `#__test_channel__` or create your own to test with.
+The above webhooks all point to our `#__test_channel__` in Slack.
