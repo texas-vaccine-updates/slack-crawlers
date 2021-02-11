@@ -10,6 +10,12 @@ dotenv.config();
 const url = process.env.HEB_WEBHOOK_URL;
 const webhook = new IncomingWebhook(url);
 
+const capitalizeSentance = (sentance) => {
+  return sentance.split(' ').map((curr, i) => {
+    return [curr.slice(0, 1).toUpperCase(), curr.slice(1).toLowerCase()].join('');
+  }).join(' ');
+};
+
 const checkHeb = async () => {
   try {
     console.log('Checking HEB for vaccines...');
@@ -38,9 +44,10 @@ const checkHeb = async () => {
       for (location in locationsWithVaccine) {
         if (locationsWithVaccine.hasOwnProperty(location)) {
           const {openTimeslots, city, url, street} = locationsWithVaccine[location];
+          const capatilizedCity = capitalizeSentance(city);
           slackFields.push({
             type: 'mrkdwn',
-            text: `<${url}|${location}>:  *${openTimeslots}* \n<https://google.com/maps/?q=${street} ${city}|${city}>`,
+            text: `<${url}|${location}>:  *${openTimeslots}* \n<https://google.com/maps/?q=${street} ${city}|${capatilizedCity}>`,
           });
         }
       }
