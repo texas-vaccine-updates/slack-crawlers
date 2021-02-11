@@ -2,6 +2,7 @@ const fetch = require('node-fetch');
 const dotenv = require('dotenv');
 const {IncomingWebhook} = require('@slack/webhook');
 const renderSlackMessage = require('../utils/renderSlackMessage');
+const capitalizeSentance = require('../utils/capitalizeSentance');
 const hebURL = 'https://heb-ecom-covid-vaccine.hebdigital-prd.com/vaccine_locations.json';
 const scheduleURL = 'https://vaccine.heb.com/scheduler';
 
@@ -9,12 +10,6 @@ dotenv.config();
 
 const url = process.env.HEB_WEBHOOK_URL;
 const webhook = new IncomingWebhook(url);
-
-const capitalizeSentance = (sentance) => {
-  return sentance.split(' ').map((curr, i) => {
-    return [curr.slice(0, 1).toUpperCase(), curr.slice(1).toLowerCase()].join('');
-  }).join(' ');
-};
 
 const checkHeb = async () => {
   try {
