@@ -40,9 +40,10 @@ const checkHeb = async () => {
         if (locationsWithVaccine.hasOwnProperty(location)) {
           const {openTimeslots, city, url, street} = locationsWithVaccine[location];
           const capatilizedCity = capitalizeSentance(city);
+          const urlFriendlyAddress = `${street.split(' ').join('+')}+${city.split(' ').join('+')}`;
           slackFields.push({
             type: 'mrkdwn',
-            text: `<${url || hebURL}|${location}>:  *${openTimeslots}* \n<https://google.com/maps/?q=${street} ${city}|${capatilizedCity}>`,
+            text: `<${url || hebURL}|${location}>:  *${openTimeslots}* \n<https://google.com/maps/?q=${urlFriendlyAddress}|${capatilizedCity}>`,
           });
         }
       }
