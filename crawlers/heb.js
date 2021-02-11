@@ -42,7 +42,7 @@ const checkHeb = async () => {
           const capatilizedCity = capitalizeSentance(city);
           slackFields.push({
             type: 'mrkdwn',
-            text: `<${url}|${location}>:  *${openTimeslots}* \n<https://google.com/maps/?q=${street} ${city}|${capatilizedCity}>`,
+            text: `🏢 <${url}|${location}>:  *${openTimeslots}* \n📍 <https://google.com/maps/?q=${street} ${city}|${capatilizedCity}>`,
           });
         }
       }
