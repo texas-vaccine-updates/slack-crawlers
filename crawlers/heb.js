@@ -8,8 +8,8 @@ const scheduleURL = 'https://vaccine.heb.com/scheduler';
 
 dotenv.config();
 
-const url = process.env.HEB_WEBHOOK_URL;
-const webhook = new IncomingWebhook(url);
+const webhookURL = process.env.HEB_WEBHOOK_URL;
+const webhook = new IncomingWebhook(webhookURL);
 
 const checkHeb = async () => {
   try {
@@ -42,7 +42,7 @@ const checkHeb = async () => {
           const capatilizedCity = capitalizeSentance(city);
           slackFields.push({
             type: 'mrkdwn',
-            text: `🏢 <${url}|${location}>:  *${openTimeslots}* \n📍 <https://google.com/maps/?q=${street} ${city}|${capatilizedCity}>`,
+            text: `<${url || hebURL}|${location}>:  *${openTimeslots}* \n<https://google.com/maps/?q=${street} ${city}|${capatilizedCity}>`,
           });
         }
       }
