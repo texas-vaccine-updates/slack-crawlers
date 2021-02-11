@@ -58,7 +58,9 @@ const checkUniversity = async () => {
     (async () => {
       try {
         const response = await fetch(universityAPI, options);
-        data = await response.json();
+        if (response.status === 200) {
+          data = await response.json();
+        }
       } catch (e) {
         console.error(e);
       }
@@ -71,4 +73,5 @@ const checkUniversity = async () => {
   }
 };
 
+checkUniversity();
 module.exports = checkUniversity;
