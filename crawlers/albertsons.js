@@ -46,10 +46,12 @@ const checkRandalls = async () => {
       mode: 'cors',
     },
     ).then(async (res) => {
-      try {
-        result = await res.json();
-      } catch (e) {
-        console.log(e);
+      if (res.status === 200) {
+        try {
+          result = await res.json();
+        } catch (e) {
+          console.log(e);
+        }
       }
       if (result.slotDates.length > 0) {
         storesWithAppointments.push({...store, slotDates: result.slotDates});
