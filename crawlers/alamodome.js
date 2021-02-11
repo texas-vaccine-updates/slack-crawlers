@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
 const dotenv = require('dotenv');
 const {IncomingWebhook} = require('@slack/webhook');
+const renderStaticSlackMessage = require('../utils/renderStaticSlackMessage');
 const alamoURL = 'https://patportal.cdpehs.com/ezEMRxPHR/html/login/newPortalReg.jsp';
 const alamoAPI = 'https://patportal.cdpehs.com/ezEMRxPHR/dwr/exec/AppointmentSchdlrAction.getMassProgramScheduleDet.dwr';
 
@@ -8,36 +9,6 @@ dotenv.config();
 
 const url = process.env.ALAMO_WEBHOOK_URL;
 const webhook = new IncomingWebhook(url);
-
-const staticSlackMessage = {
-  blocks: [
-    {
-      type: 'section',
-      text: {
-        type: 'mrkdwn',
-        text: '*Vaccines are available! 💉 @channel*',
-      },
-    },
-    {
-      type: 'section',
-      text: {
-        type: 'mrkdwn',
-        text: 'Click here to schedule using code `DOMECOVID`:',
-      },
-      accessory: {
-        type: 'button',
-        text: {
-          type: 'plain_text',
-          text: 'Schedule',
-          emoji: true,
-        },
-        value: 'vaccine',
-        url: alamoURL,
-        action_id: 'button-action',
-      },
-    },
-  ],
-};
 
 const options = {
   'headers': {
@@ -64,7 +35,7 @@ const checkAlamodome = async () => {
         const response = await fetch(alamoAPI, options);
         data = await response.text();
         if (data.includes('value')) {
-          await webhook.send(staticSlackMessage);
+          await webhook.send(renderStaticSlackMessage(alamoURL));
         }
       } catch (e) {
         console.error(e);
