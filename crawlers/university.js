@@ -58,7 +58,6 @@ const checkUniversity = async () => {
     (async () => {
       try {
         const response = await fetch(universityAPI, options);
-        console.log(response);
         if (response.status === 200) {
           data = await response.json();
         }
