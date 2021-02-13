@@ -10,11 +10,31 @@ dotenv.config();
 const url = process.env.UNIVERSITY_WEBHOOK_URL;
 const webhook = new IncomingWebhook(url);
 
-const dateString = getDateString();
-const futureDateString = getDateString(14);
+const preflightURL = 'https://mychart-openscheduling.et1130.epichosted.com/MyChart/SignupAndSchedule/EmbeddedSchedule?id=51748&dept=10554003&vt=1788&view=grouped';
+const preflightOptions = {
+  'headers': {
+    'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    'accept-language': 'en-US,en;q=0.9',
+    'cache-control': 'no-cache',
+    'pragma': 'no-cache',
+    'sec-fetch-dest': 'document',
+    'sec-fetch-mode': 'navigate',
+    'sec-fetch-site': 'none',
+    'sec-fetch-user': '?1',
+    'upgrade-insecure-requests': '1',
+  },
+  'referrerPolicy': 'strict-origin-when-cross-origin',
+  'body': null,
+  'method': 'GET',
+  'mode': 'cors',
+};
+
 
 const noCache = Math.random();
 const universityAPI = `https://mychart-openscheduling.et1130.epichosted.com/MyChart/OpenScheduling/OpenScheduling/GetOpeningsForProvider?noCache=${noCache}`;
+
+const dateString = getDateString();
+const futureDateString = getDateString(14);
 
 const options = {
   'headers': {
@@ -50,6 +70,15 @@ const checkUniversity = async () => {
   try {
     (async () => {
       try {
+        let cookie;
+        const preflight = async () => {
+          const response = await fetch(preflightURL);
+          const preflightData = await response.json();
+          cookie = response.headers.get('set-cookie');
+        };
+
+        // await preflight; // will enable instead of refreshing cookies manually.
+
         const response = await fetch(universityAPI, options);
         if (response.status === 200) {
           data = await response.json();
