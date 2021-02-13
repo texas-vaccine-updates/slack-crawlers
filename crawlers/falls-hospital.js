@@ -47,7 +47,8 @@ const checkFallsHospital = async () => {
     }
 
     if (response.status === 200) {
-      if (data.data.length > lastTime) {
+      const thisTime = data.data.length;
+      if (thisTime > (lastTime + 20) || thisTime < (lastTime - 20)) {
         lastTime = data.data.length;
         await webhook.send(renderFallsSlackMessage(scheduleURL, lastTime));
       }
