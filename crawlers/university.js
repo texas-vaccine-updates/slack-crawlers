@@ -2,6 +2,7 @@ const fetch = require('node-fetch');
 const dotenv = require('dotenv');
 const {IncomingWebhook} = require('@slack/webhook');
 const renderStaticSlackMessage = require('../utils/renderStaticSlackMessage');
+const getDateString = require('../utils/getDateString');
 const universityURL = 'https://mychart-openscheduling.et1130.epichosted.com/MyChart/SignupAndSchedule/EmbeddedSchedule?id=51748&dept=10554003&vt=1788&view=grouped';
 const universityAPI = 'https://mychart-openscheduling.et1130.epichosted.com/MyChart/OpenScheduling/OpenScheduling/GetOpeningsForProvider';
 
@@ -10,18 +11,8 @@ dotenv.config();
 const url = process.env.UNIVERSITY_WEBHOOK_URL;
 const webhook = new IncomingWebhook(url);
 
-const date = new Date();
-const day = ('0' + date.getDate()).slice(-2);
-const month = ('0' + (date.getMonth() + 1)).slice(-2);
-const year = date.getFullYear();
-const dateString = `${year}-${month}-${day}`;
-
-const futureDate = new Date();
-futureDate.setDate(futureDate.getDate() + 14);
-const futureDay = ('0' + futureDate.getDate()).slice(-2);
-const futureMonth = ('0' + (futureDate.getMonth() + 1)).slice(-2);
-const futureYear = futureDate.getFullYear();
-const futureDateString = `${futureYear}-${futureMonth}-${futureDay}`;
+const dateString = getDateString();
+const futureDateString = getDateString(14);
 
 const options = {
   'headers': {
