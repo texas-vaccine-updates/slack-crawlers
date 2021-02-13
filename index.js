@@ -7,6 +7,7 @@ const checkRandalls = require('./crawlers/albertsons');
 const checkAlamodome = require('./crawlers/alamodome');
 const checkBellCounty = require('./crawlers/bell-county');
 const checkUniversity = require('./crawlers/university');
+const checkFallsHospital = require('./crawlers/falls-hospital');
 
 const cronJobInterval = '*/1 * * * *';
 
@@ -30,6 +31,7 @@ cron.schedule(cronJobInterval, async () => {
     await checkAlamodome();
     await checkUniversity();
     await checkRandalls();
+    await checkFallsHospital();
   } catch (error) {
     console.error(error);
   }
