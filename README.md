@@ -1,5 +1,3 @@
-<img height="100" alt="portfolio_view" src="https://github.com/jameskip/texas-vaccines/blob/main/IMG_0339.JPG">
-
 # Texas Vaccine Updates
 
 
