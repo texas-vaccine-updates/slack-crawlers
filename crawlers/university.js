@@ -62,7 +62,7 @@ const checkUniversity = async () => {
 
         const options = {
           'headers': {
-            '__requestverificationtoken': 'ojvbzlc_vzThMdoVjwzqyftvLchb1vVyrDgCdbB5Ck8ZjUuLekGdl22J-VIDbRoZycsJ3qb0X3PymC-yXFeFUy-0oas1',
+            '__requestverificationtoken': 'X7k_o89swp4pRuKyM1yQGGrV6X0AJBM6NFnYXsjjkH3KP2PGdNS0XWi-ClipBXOarp4dcR_sRaFYXCSOUxQxi10mJFw1',
             'accept': '*/*',
             'accept-language': 'en-US,en;q=0.9',
             'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -81,8 +81,10 @@ const checkUniversity = async () => {
 
 
         const response = await fetch(universityAPI, options);
-        if (response.status === 200) {
-          data = await response.json();
+        try {
+          data = await response.text();
+        } catch (e) {
+          console.error(e);
         }
       } catch (e) {
         console.error(e);
