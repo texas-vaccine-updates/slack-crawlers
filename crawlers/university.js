@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 const {IncomingWebhook} = require('@slack/webhook');
 const renderStaticSlackMessage = require('../utils/renderStaticSlackMessage');
 const getDateString = require('../utils/getDateString');
-const universityURL = 'https://mychart-openscheduling.et1130.epichosted.com/MyChart/SignupAndSchedule/EmbeddedSchedule?id=51748&dept=10554003&vt=1788&view=grouped';
+const universityURL = 'https://mychart-openscheduling.et1130.epichosted.com/MyChart/SignupAndSchedule/EmbeddedSchedule?id=51585&dept=10554002&vt=1788&view=grouped';
 
 dotenv.config();
 
