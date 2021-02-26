@@ -2,7 +2,7 @@ const express = require('express');
 const cron = require('node-cron');
 const fetch = require('node-fetch');
 const checkHeb = require('./crawlers/heb');
-const checkRandalls = require('./crawlers/albertsons');
+// const checkRandalls = require('./crawlers/albertsons');
 const checkAlamodome = require('./crawlers/alamodome');
 const checkBellCounty = require('./crawlers/bell-county');
 const checkUniversity = require('./crawlers/university');
@@ -28,7 +28,7 @@ cron.schedule(cronJobInterval, async () => {
     await checkBellCounty();
     await checkAlamodome();
     await checkUniversity();
-    await checkRandalls();
+    // await checkRandalls(); NOTE: Currently being blocked by Albertsons
     await checkFallsHospital();
   } catch (error) {
     console.error(error);
