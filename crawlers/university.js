@@ -83,7 +83,6 @@ const checkUniversity = async () => {
         const response = await fetch(universityAPI, options);
         try {
           data = await response.text();
-          console.log(data);
         } catch (e) {
           console.error(e);
         }
