@@ -30,7 +30,7 @@ const options = {
   },
   'referrer': 'https://mychart-openscheduling.et1130.epichosted.com/MyChart/SignupAndSchedule/EmbeddedSchedule?id=51748&dept=10554003&vt=1788&view=grouped',
   'referrerPolicy': 'same-origin',
-  'body': `id=51748&vt=1788&dept=10554003&view=grouped&start=${dateString}&end=${futureDateString}&filters=%7B%22Providers%22%3A%7B%2251748%22%3Atrue%7D%2C%22Departments%22%3A%7B%2210554003%22%3Atrue%7D%2C%22DaysOfWeek%22%3A%7B%220%22%3Atrue%2C%221%22%3Atrue%2C%222%22%3Atrue%2C%223%22%3Atrue%2C%224%22%3Atrue%2C%225%22%3Atrue%2C%226%22%3Atrue%7D%2C%22TimesOfDay%22%3A%22both%22%7D`,
+  'body': `id=51585&vt=1788&dept=10554002&view=grouped&start=${dateString}&end=${futureDateString}&filters=%7B%22Providers%22%3A%7B%2251585%22%3Atrue%7D%2C%22Departments%22%3A%7B%2210554002%22%3Atrue%7D%2C%22DaysOfWeek%22%3A%7B%220%22%3Atrue%2C%221%22%3Atrue%2C%222%22%3Atrue%2C%223%22%3Atrue%2C%224%22%3Atrue%2C%225%22%3Atrue%2C%226%22%3Atrue%7D%2C%22TimesOfDay%22%3A%22both%22%7D`,
   'method': 'POST',
   'mode': 'cors',
 };
@@ -47,22 +47,20 @@ const isEmpty = (obj) => {
 const checkUniversity = async () => {
   console.log('Checking University for vaccines...');
   let data;
-  (async () => {
+  try {
+    const response = await fetch(universityAPI, options);
+    data = await response.json();
+    console.log(data);
+  } catch (e) {
+    console.error(e);
+  }
+  if (!isEmpty(data.AllDays)) {
     try {
-      const response = await fetch(universityAPI, options);
-      data = await response.json();
+      await webhook.send(renderStaticSlackMessage(universityURL));
     } catch (e) {
       console.error(e);
     }
-    if (!isEmpty(data.AllDays)) {
-      try {
-        await webhook.send(renderStaticSlackMessage(universityURL));
-      } catch (e) {
-        console.error(e);
-      }
-    }
-  })();
+  }
 };
-
 
 module.exports = checkUniversity;
