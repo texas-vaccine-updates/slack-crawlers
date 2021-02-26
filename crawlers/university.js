@@ -47,30 +47,22 @@ const isEmpty = (obj) => {
 const checkUniversity = async () => {
   console.log('Checking University for vaccines...');
   let data;
-  try {
-    (async () => {
+  (async () => {
+    try {
+      const response = await fetch(universityAPI, options);
+      data = await response.json();
+    } catch (e) {
+      console.error(e);
+    }
+    if (!isEmpty(data.AllDays)) {
       try {
-        const response = await fetch(universityAPI, options);
-          data = await response.json();
-        } catch (e) {
-          console.error(e);
-        }
+        await webhook.send(renderStaticSlackMessage(universityURL));
       } catch (e) {
         console.error(e);
       }
-      if (!isEmpty(data.AllDays)) {
-        try {
-          await webhook.send(renderStaticSlackMessage(universityURL));
-        } catch (e) {
-          console.error(e);
-        }
-      }
-    })();
-  } catch (e) {
-    console.error(e);
-  }
+    }
+  })();
 };
 
-checkUniversity();
 
 module.exports = checkUniversity;
