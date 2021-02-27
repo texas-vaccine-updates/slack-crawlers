@@ -30,17 +30,11 @@ const options = {
 const checkAlamodome = async () => {
   console.log('Checking Alamodome for vaccines...');
   try {
-    (async () => {
-      try {
-        const response = await fetch(alamoAPI, options);
-        data = await response.text();
-        if (data.includes('value')) {
-          await webhook.send(renderStaticSlackMessage(alamoURL));
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    })();
+    const response = await fetch(alamoAPI, options);
+    data = await response.text();
+    if (data.includes('value')) {
+      await webhook.send(renderStaticSlackMessage(alamoURL));
+    }
   } catch (e) {
     console.error(e);
   }
