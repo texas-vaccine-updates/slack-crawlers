@@ -1,4 +1,5 @@
 const fetch = require('node-fetch');
+const cheerio = require('cheerio');
 const dotenv = require('dotenv');
 const {IncomingWebhook} = require('@slack/webhook');
 const renderStaticSlackMessage = require('../utils/renderStaticSlackMessage');
@@ -16,7 +17,7 @@ const universityAPI = `https://mychart-openscheduling.et1130.epichosted.com/MyCh
 const dateString = getDateString();
 const futureDateString = getDateString(14);
 
-const options = {
+var options = {
   'headers': {
     '__requestverificationtoken': 'tiVPog4pvBP5HeBOSqXsaAWLsycOJO_YIqjLGsJnnPHvU09wbD47X_cuuCkNkN04U0erNO3prYdiuWzmYcJDVxekD-w1',
     'accept': '*/*',
@@ -46,6 +47,13 @@ const isEmpty = (obj) => {
 
 const checkUniversity = async () => {
   console.log('Checking University for vaccines...');
+
+  // Gets a new token and cookie each time.
+  tokenAndCookie = await getTokenAndCookie();
+
+  options.headers.__requestverificationtoken = tokenAndCookie[0];
+  options.headers.cookie = tokenAndCookie[1];
+
   let data;
   try {
     const response = await fetch(universityAPI, options);
@@ -60,6 +68,33 @@ const checkUniversity = async () => {
     } catch (e) {
       console.error(e);
     }
+  }
+};
+
+const getTokenAndCookie = async () => {
+  try {
+    const response = await fetch(universityURL);
+    html = await response.text();
+
+    // Gets all cookies into an array.
+    rawCookies = await response.headers.raw()['set-cookie'];
+
+    // Removes duplicate cookies.
+    cookiesArrayNoDups = [ ...new Set(rawCookies)];
+
+    // Joins cookies into a string concatenated with a semicolon.
+    cookies = cookiesArrayNoDups.join(';');
+
+    // Loads HTML into cheerio.
+    const $ = cheerio.load(html);
+
+    // Uses jQuery-like syntax to find the RequestVerificationToken.
+    token = $('input[name="__RequestVerificationToken"]').val();
+  
+    // Returns both the token and the cookie in the same return value.
+    return [token, cookies];
+  } catch (e) {
+    console.error(e);
   }
 };
 
