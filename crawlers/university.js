@@ -17,7 +17,7 @@ const universityAPI = `https://mychart-openscheduling.et1130.epichosted.com/MyCh
 const dateString = getDateString();
 const futureDateString = getDateString(14);
 
-var options = {
+const options = {
   'headers': {
     '__requestverificationtoken': 'tiVPog4pvBP5HeBOSqXsaAWLsycOJO_YIqjLGsJnnPHvU09wbD47X_cuuCkNkN04U0erNO3prYdiuWzmYcJDVxekD-w1',
     'accept': '*/*',
@@ -27,7 +27,6 @@ var options = {
     'sec-fetch-mode': 'cors',
     'sec-fetch-site': 'same-origin',
     'x-requested-with': 'XMLHttpRequest',
-    'cookie': 'MyChartLocale=en-US; MyChart_Session=2rmtn0kembyr3nw2mtl22gq5; __RequestVerificationToken_L015Q2hhcnQ1=PgiMEzH45ni09mEM4Sq5kWAPUjYqzNSJ8iyH1kpM3R2onuZ7RRJOcWaQTtBLjGaQARuuIPg1qmh8ZU0Az2g3_ts6gjc1; MYCPERS=3456112300.47873.0000; .WPCOOKIE4mychart=D9D612704F22EBE7E9498E42ADD44E90BBF9C2D31912BD7C9AA818E1B56B99D4F1A7E5D76703F5604485075CAFF30BE0E6B63B1D7216E9A2364A17CDBCC348328FFA3E08664C83BC02BD9F227254599EC387FE58298C05F0CA89439F34C55017EBC470AC558B6A11DDA53B13D24F389BF142DF4A14A9C61543547C997879E4A131BA134378CD90330888F9D67E76B74EA54DDBF6ABF96C8B398DB0618D67D792F82BF0053B1817B8C04DAD21D60497439226184B64B01AB0282DD2653579FC8671670BE3828F51D4FF43AD6F681A6A763491983718B0A267A4FCA86436FBEF6621905170EBEEA24121F0700A7770E5A5C82A311A',
   },
   'referrer': 'https://mychart-openscheduling.et1130.epichosted.com/MyChart/SignupAndSchedule/EmbeddedSchedule?id=51748&dept=10554003&vt=1788&view=grouped',
   'referrerPolicy': 'same-origin',
@@ -45,20 +44,33 @@ const isEmpty = (obj) => {
   return true;
 };
 
+const getTokenAndCookie = async () => {
+  try {
+    const response = await fetch(universityURL);
+    const html = await response.text();
+    const rawCookies = await response.headers.raw()['set-cookie'];
+    const cookiesArrayNoDups = [...new Set(rawCookies)];
+    const cookies = cookiesArrayNoDups.join(';');
+    const $ = cheerio.load(html);
+    const token = $('input[name="__RequestVerificationToken"]').val();
+
+    return [token, cookies];
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 const checkUniversity = async () => {
   console.log('Checking University for vaccines...');
 
-  // Gets a new token and cookie each time.
-  tokenAndCookie = await getTokenAndCookie();
-
-  options.headers.__requestverificationtoken = tokenAndCookie[0];
-  options.headers.cookie = tokenAndCookie[1];
+  const [token, cookie] = await getTokenAndCookie();
+  options.headers.__requestverificationtoken = token;
+  options.headers.cookie = cookie;
 
   let data;
   try {
     const response = await fetch(universityAPI, options);
     data = await response.json();
-    console.log(data);
   } catch (e) {
     console.error(e);
   }
@@ -68,33 +80,6 @@ const checkUniversity = async () => {
     } catch (e) {
       console.error(e);
     }
-  }
-};
-
-const getTokenAndCookie = async () => {
-  try {
-    const response = await fetch(universityURL);
-    html = await response.text();
-
-    // Gets all cookies into an array.
-    rawCookies = await response.headers.raw()['set-cookie'];
-
-    // Removes duplicate cookies.
-    cookiesArrayNoDups = [ ...new Set(rawCookies)];
-
-    // Joins cookies into a string concatenated with a semicolon.
-    cookies = cookiesArrayNoDups.join(';');
-
-    // Loads HTML into cheerio.
-    const $ = cheerio.load(html);
-
-    // Uses jQuery-like syntax to find the RequestVerificationToken.
-    token = $('input[name="__RequestVerificationToken"]').val();
-  
-    // Returns both the token and the cookie in the same return value.
-    return [token, cookies];
-  } catch (e) {
-    console.error(e);
   }
 };
 
