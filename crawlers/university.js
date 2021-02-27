@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const {IncomingWebhook} = require('@slack/webhook');
 const renderStaticSlackMessage = require('../utils/renderStaticSlackMessage');
 const getDateString = require('../utils/getDateString');
+const isEmpty = require('../utils/isEmpty');
 const universityURL = 'https://mychart-openscheduling.et1130.epichosted.com/MyChart/SignupAndSchedule/EmbeddedSchedule?id=51585&dept=10554002&vt=1788&view=grouped';
 
 dotenv.config();
@@ -35,15 +36,6 @@ const options = {
   'mode': 'cors',
 };
 
-const isEmpty = (obj) => {
-  for (const key in obj) {
-    if (obj.hasOwnProperty(key)) {
-      return false;
-    }
-  }
-  return true;
-};
-
 const getTokenAndCookie = async () => {
   try {
     const response = await fetch(universityURL);
@@ -62,7 +54,6 @@ const getTokenAndCookie = async () => {
 
 const checkUniversity = async () => {
   console.log('Checking University for vaccines...');
-
   const [token, cookie] = await getTokenAndCookie();
   options.headers.__requestverificationtoken = token;
   options.headers.cookie = cookie;
