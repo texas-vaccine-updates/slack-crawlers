@@ -11,6 +11,8 @@ dotenv.config();
 const webhookURL = process.env.HEB_WEBHOOK_URL;
 const webhook = new IncomingWebhook(webhookURL);
 
+const lastHit = {};
+
 const checkHeb = async () => {
   try {
     console.log('Checking HEB for vaccines...');
@@ -24,7 +26,9 @@ const checkHeb = async () => {
         if (vaccineLocations.locations.hasOwnProperty(location)) {
           const {name, openTimeslots, city, street, url} = vaccineLocations.locations[location];
 
-          if (openTimeslots > 3) {
+          if (openTimeslots > 4 && (!lastHit[name] || openTimeslots > lastHit[name])) {
+            lastHit[name] = openTimeslots;
+            console.log(lastHit);
             locationsWithVaccine[name] = {openTimeslots, city, url, street};
           }
         }
@@ -61,5 +65,7 @@ const checkHeb = async () => {
     console.error(e);
   }
 };
+
+checkHeb();
 
 module.exports = checkHeb;
