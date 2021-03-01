@@ -107,15 +107,15 @@ const checkBellCounty = async () => {
     }
 
     console.log(beltonBookableItems);
-    if (killeenBookableItems.length > 1) {
+    if (killeenBookableItems.length > 0) {
       const slackMessage = renderBellSlackMessage(killeenScheduleURL, 'Killeen');
       await webhook.send(slackMessage);
     }
-    if (templeBookableItems.length > 1) {
+    if (templeBookableItems.length > 0) {
       const slackMessage = renderBellSlackMessage(templeScheduleURL, 'Temple');
       await webhook.send(slackMessage);
     }
-    if (beltonBookableItems.length > 1) {
+    if (beltonBookableItems.length > 0) {
       const slackMessage = renderBellSlackMessage(beltonScheduleURL, 'Belton');
       await webhook.send(slackMessage);
     }
@@ -123,7 +123,5 @@ const checkBellCounty = async () => {
     console.error(e);
   }
 };
-
-checkBellCounty();
 
 module.exports = checkBellCounty;

@@ -26,8 +26,8 @@ const checkHeb = async () => {
         if (vaccineLocations.locations.hasOwnProperty(location)) {
           const {name, openTimeslots, city, street, url} = vaccineLocations.locations[location];
 
+          lastHit[name] = openTimeslots;
           if (openTimeslots > 4 && (!lastHit[name] || openTimeslots > lastHit[name])) {
-            lastHit[name] = openTimeslots;
             locationsWithVaccine[name] = {openTimeslots, city, url, street};
           }
         }
@@ -64,7 +64,5 @@ const checkHeb = async () => {
     console.error(e);
   }
 };
-
-checkHeb();
 
 module.exports = checkHeb;
