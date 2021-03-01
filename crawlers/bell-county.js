@@ -106,7 +106,6 @@ const checkBellCounty = async () => {
       console.error(e);
     }
 
-    console.log(beltonBookableItems);
     if (killeenBookableItems.length > 0) {
       const slackMessage = renderBellSlackMessage(killeenScheduleURL, 'Killeen');
       await webhook.send(slackMessage);
