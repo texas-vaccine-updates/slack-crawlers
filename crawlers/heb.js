@@ -25,6 +25,9 @@ const checkHeb = async () => {
           const {name, openTimeslots, city, street, url} = vaccineLocations.locations[location];
 
           if (openTimeslots > 4) {
+            if (name === 'Lubbock H-E-B') {
+              return;
+            }
             locationsWithVaccine[name] = {openTimeslots, city, url, street};
           }
         }
