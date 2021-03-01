@@ -60,27 +60,27 @@ const templeOptions = {
 };
 
 const beltonOptions = {
-  "headers": {
-    "accept": "*/*",
-    "accept-language": "en-US,en;q=0.9",
-    "content-type": "application/json; charset=UTF-8",
-    "sec-fetch-dest": "empty",
-    "sec-fetch-mode": "cors",
-    "sec-fetch-site": "same-origin",
-    "cookie": "ClientId=BE2D9ACA38F24040B4F9F9A3A37B3159; OIDC=1; OutlookSession=62f718dc95d94dfba2817aabd4cdb90f"
+  'headers': {
+    'accept': '*/*',
+    'accept-language': 'en-US,en;q=0.9',
+    'content-type': 'application/json; charset=UTF-8',
+    'sec-fetch-dest': 'empty',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-site': 'same-origin',
+    'cookie': 'ClientId=BE2D9ACA38F24040B4F9F9A3A37B3159; OIDC=1; OutlookSession=62f718dc95d94dfba2817aabd4cdb90f',
   },
-  "referrerPolicy": "no-referrer",
-  "body": "{\"StaffList\":[\"rZKlNcMJ60u2fhfMvudNCg==\"],\"Start\":\"2021-02-28T00:00:00\",\"End\":\"2021-04-02T00:00:00\",\"TimeZone\":\"America/Chicago\",\"ServiceId\":\"W-169pjrAkyQl0ElzvRl0A2\"}",
-  "method": "POST",
-  "mode": "cors"
-});
+  'referrerPolicy': 'no-referrer',
+  'body': '{"StaffList":["rZKlNcMJ60u2fhfMvudNCg=="],"Start":"2021-02-28T00:00:00","End":"2021-04-02T00:00:00","TimeZone":"America/Chicago","ServiceId":"W-169pjrAkyQl0ElzvRl0A2"}',
+  'method': 'POST',
+  'mode': 'cors',
+};
 
 const checkBellCounty = async () => {
   console.log('Checking Bell County for vaccines...');
   Promise.all([
     fetch(killeenURL, killeenOptions),
     fetch(templeURL, templeOptions),
-    fetch(beltonURL, beltonOptions)
+    fetch(beltonURL, beltonOptions),
   ]).then((responses) => {
     return Promise.allSettled(responses.map((response) => response.json()));
   }).then(async (data) => {
@@ -106,5 +106,7 @@ const checkBellCounty = async () => {
     console.log(error);
   });
 };
+
+checkBellCounty();
 
 module.exports = checkBellCounty;
