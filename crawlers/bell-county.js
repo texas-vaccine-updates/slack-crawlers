@@ -10,8 +10,10 @@ const webhook = new IncomingWebhook(url);
 
 const killeenURL = 'https://outlook.office365.com/owa/calendar/BellCountyTechnologyServices1@bellcountytx.onmicrosoft.com/bookings/service.svc/GetStaffBookability';
 const templeURL = 'https://outlook.office365.com/owa/calendar/BellCountyTechnologyServices2@bellcountytx.onmicrosoft.com/bookings/service.svc/GetStaffBookability';
+const beltonURL = 'https://outlook.office365.com/owa/calendar/BellCountyTechnologyServices3@bellcountytx.onmicrosoft.com/bookings/service.svc/GetStaffBookability';
 const killeenScheduleURL = 'https://outlook.office365.com/owa/calendar/BellCountyTechnologyServices1@bellcountytx.onmicrosoft.com/bookings/';
 const templeScheduleURL = 'https://outlook.office365.com/owa/calendar/BellCountyTechnologyServices2@bellcountytx.onmicrosoft.com/bookings/';
+const beltonScheduleURL = 'https://outlook.office365.com/owa/calendar/BellCountyTechnologyServices3@bellcountytx.onmicrosoft.com/bookings/';
 
 const killeenOptions = {
   'method': 'POST',
@@ -57,17 +59,36 @@ const templeOptions = {
 
 };
 
+const beltonOptions = {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "en-US,en;q=0.9",
+    "content-type": "application/json; charset=UTF-8",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-origin",
+    "cookie": "ClientId=BE2D9ACA38F24040B4F9F9A3A37B3159; OIDC=1; OutlookSession=62f718dc95d94dfba2817aabd4cdb90f"
+  },
+  "referrerPolicy": "no-referrer",
+  "body": "{\"StaffList\":[\"rZKlNcMJ60u2fhfMvudNCg==\"],\"Start\":\"2021-02-28T00:00:00\",\"End\":\"2021-04-02T00:00:00\",\"TimeZone\":\"America/Chicago\",\"ServiceId\":\"W-169pjrAkyQl0ElzvRl0A2\"}",
+  "method": "POST",
+  "mode": "cors"
+});
+
 const checkBellCounty = async () => {
   console.log('Checking Bell County for vaccines...');
   Promise.all([
     fetch(killeenURL, killeenOptions),
     fetch(templeURL, templeOptions),
+    fetch(beltonURL, beltonOptions)
   ]).then((responses) => {
     return Promise.allSettled(responses.map((response) => response.json()));
   }).then(async (data) => {
-    const [killeen, temple] = data;
+    const [killeen, temple, belton] = data;
     const killeenBookableItems = killeen.value.StaffBookabilities[0].BookableItems;
     const templeBookableItems = temple.value.StaffBookabilities[0].BookableItems;
+    const beltonBookableItems = belton.value.StaffBookabilities[0].BookableItems;
+
 
     if (killeenBookableItems.length > 1) {
       const slackMessage = renderBellSlackMessage(killeenScheduleURL, 'Killeen');
@@ -75,6 +96,10 @@ const checkBellCounty = async () => {
     }
     if (templeBookableItems.length > 1) {
       const slackMessage = renderBellSlackMessage(templeScheduleURL, 'Temple');
+      await webhook.send(slackMessage);
+    }
+    if (beltonBookableItems.length > 1) {
+      const slackMessage = renderBellSlackMessage(beltonScheduleURL, 'Belton');
       await webhook.send(slackMessage);
     }
   }).catch((error) => {
