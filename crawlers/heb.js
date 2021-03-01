@@ -28,7 +28,6 @@ const checkHeb = async () => {
 
           if (openTimeslots > 4 && (!lastHit[name] || openTimeslots > lastHit[name])) {
             lastHit[name] = openTimeslots;
-            console.log(lastHit);
             locationsWithVaccine[name] = {openTimeslots, city, url, street};
           }
         }
