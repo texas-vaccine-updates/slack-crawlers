@@ -69,10 +69,6 @@ const beltonOptions = {
   'mode': 'cors',
 };
 
-const sendSlackMessage = (bookableItems, city) => {
-
-};
-
 const checkBellCounty = async () => {
   try {
     console.log('Checking Bell County for vaccines...');

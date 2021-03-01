@@ -11,8 +11,6 @@ dotenv.config();
 const webhookURL = process.env.HEB_WEBHOOK_URL;
 const webhook = new IncomingWebhook(webhookURL);
 
-const lastHit = {};
-
 const checkHeb = async () => {
   try {
     console.log('Checking HEB for vaccines...');
@@ -26,8 +24,7 @@ const checkHeb = async () => {
         if (vaccineLocations.locations.hasOwnProperty(location)) {
           const {name, openTimeslots, city, street, url} = vaccineLocations.locations[location];
 
-          lastHit[name] = openTimeslots;
-          if (openTimeslots > 4 && (!lastHit[name] || openTimeslots > lastHit[name])) {
+          if (openTimeslots > 4) {
             locationsWithVaccine[name] = {openTimeslots, city, url, street};
           }
         }
@@ -44,6 +41,7 @@ const checkHeb = async () => {
           const {openTimeslots, city, url, street} = locationsWithVaccine[location];
           const capatilizedCity = capitalizeSentance(city);
           const urlFriendlyAddress = `${street.split(' ').join('+')}+${city.split(' ').join('+')}`;
+
           slackFields.push({
             type: 'mrkdwn',
             text: `<${url || hebURL}|${location}>:  *${openTimeslots}* \n<https://google.com/maps/?q=${urlFriendlyAddress}|${capatilizedCity}>`,
