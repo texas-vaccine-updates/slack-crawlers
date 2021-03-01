@@ -24,10 +24,7 @@ const checkHeb = async () => {
         if (vaccineLocations.locations.hasOwnProperty(location)) {
           const {name, openTimeslots, city, street, url} = vaccineLocations.locations[location];
 
-          if (openTimeslots > 4) {
-            if (name === 'Lubbock H-E-B') {
-              return;
-            }
+          if (openTimeslots > 4 && name !== 'Lubbock H-E-B' && name !== 'H-E-B Pharmacy at the Medical Center Hospital') {
             locationsWithVaccine[name] = {openTimeslots, city, url, street};
           }
         }
