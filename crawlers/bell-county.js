@@ -76,36 +76,54 @@ const beltonOptions = {
 };
 
 const checkBellCounty = async () => {
-  console.log('Checking Bell County for vaccines...');
-  Promise.all([
-    // fetch(killeenURL, killeenOptions),
-    // fetch(templeURL, templeOptions),
-    fetch(beltonURL, beltonOptions),
-  ]).then((responses) => {
-    return Promise.allSettled(responses.map((response) => response.json()));
-  }).then(async (data) => {
-    console.log(data);
-    const [belton] = data;
-    // const killeenBookableItems = killeen.value.StaffBookabilities[0].BookableItems;
-    // const templeBookableItems = temple.value.StaffBookabilities[0].BookableItems;
-    const beltonBookableItems = belton.value.StaffBookabilities[0].BookableItems;
+  try {
+    console.log('Checking Bell County for vaccines...');
+    const killeenRes = await fetch(killeenURL, killeenOptions);
+    const templeRes = await fetch(templeURL, templeOptions);
+    const beltonRes = await fetch(beltonURL, beltonOptions);
 
+    const killeenData = await killeenRes.json();
+    const templeData = await templeRes.json();
+    const beltonData = await beltonRes.json();
 
-    // if (killeenBookableItems.length > 1) {
-    //   const slackMessage = renderBellSlackMessage(killeenScheduleURL, 'Killeen');
-    //   await webhook.send(slackMessage);
-    // }
-    // if (templeBookableItems.length > 1) {
-    //   const slackMessage = renderBellSlackMessage(templeScheduleURL, 'Temple');
-    //   await webhook.send(slackMessage);
-    // }
+    let killeenBookableItems = [];
+    let templeBookableItems = [];
+    let beltonBookableItems = [];
+
+    try {
+      killeenBookableItems = killeenData.StaffBookabilities[0].BookableItems;
+    } catch (e) {
+      console.error(e);
+    }
+    try {
+      templeBookableItems = templeData.StaffBookabilities[0].BookableItems;
+    } catch (e) {
+      console.error(e);
+    }
+    try {
+      beltonBookableItems = beltonData.StaffBookabilities[0].BookableItems;
+    } catch (e) {
+      console.error(e);
+    }
+
+    console.log(beltonBookableItems);
+    if (killeenBookableItems.length > 1) {
+      const slackMessage = renderBellSlackMessage(killeenScheduleURL, 'Killeen');
+      await webhook.send(slackMessage);
+    }
+    if (templeBookableItems.length > 1) {
+      const slackMessage = renderBellSlackMessage(templeScheduleURL, 'Temple');
+      await webhook.send(slackMessage);
+    }
     if (beltonBookableItems.length > 1) {
       const slackMessage = renderBellSlackMessage(beltonScheduleURL, 'Belton');
       await webhook.send(slackMessage);
     }
-  }).catch((error) => {
-    console.log(error);
-  });
+  } catch (e) {
+    console.error(e);
+  }
 };
+
+checkBellCounty();
 
 module.exports = checkBellCounty;
