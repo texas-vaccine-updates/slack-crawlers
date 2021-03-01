@@ -78,26 +78,27 @@ const beltonOptions = {
 const checkBellCounty = async () => {
   console.log('Checking Bell County for vaccines...');
   Promise.all([
-    fetch(killeenURL, killeenOptions),
-    fetch(templeURL, templeOptions),
+    // fetch(killeenURL, killeenOptions),
+    // fetch(templeURL, templeOptions),
     fetch(beltonURL, beltonOptions),
   ]).then((responses) => {
     return Promise.allSettled(responses.map((response) => response.json()));
   }).then(async (data) => {
-    const [killeen, temple, belton] = data;
-    const killeenBookableItems = killeen.value.StaffBookabilities[0].BookableItems;
-    const templeBookableItems = temple.value.StaffBookabilities[0].BookableItems;
+    console.log(data);
+    const [belton] = data;
+    // const killeenBookableItems = killeen.value.StaffBookabilities[0].BookableItems;
+    // const templeBookableItems = temple.value.StaffBookabilities[0].BookableItems;
     const beltonBookableItems = belton.value.StaffBookabilities[0].BookableItems;
 
 
-    if (killeenBookableItems.length > 1) {
-      const slackMessage = renderBellSlackMessage(killeenScheduleURL, 'Killeen');
-      await webhook.send(slackMessage);
-    }
-    if (templeBookableItems.length > 1) {
-      const slackMessage = renderBellSlackMessage(templeScheduleURL, 'Temple');
-      await webhook.send(slackMessage);
-    }
+    // if (killeenBookableItems.length > 1) {
+    //   const slackMessage = renderBellSlackMessage(killeenScheduleURL, 'Killeen');
+    //   await webhook.send(slackMessage);
+    // }
+    // if (templeBookableItems.length > 1) {
+    //   const slackMessage = renderBellSlackMessage(templeScheduleURL, 'Temple');
+    //   await webhook.send(slackMessage);
+    // }
     if (beltonBookableItems.length > 1) {
       const slackMessage = renderBellSlackMessage(beltonScheduleURL, 'Belton');
       await webhook.send(slackMessage);
@@ -106,5 +107,7 @@ const checkBellCounty = async () => {
     console.log(error);
   });
 };
+
+checkBellCounty();
 
 module.exports = checkBellCounty;
