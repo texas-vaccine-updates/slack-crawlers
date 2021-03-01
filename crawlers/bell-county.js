@@ -16,25 +16,19 @@ const templeScheduleURL = 'https://outlook.office365.com/owa/calendar/BellCounty
 const beltonScheduleURL = 'https://outlook.office365.com/owa/calendar/BellCountyTechnologyServices3@bellcountytx.onmicrosoft.com/bookings/';
 
 const killeenOptions = {
-  'method': 'POST',
-  'url': 'https://outlook.office365.com/owa/calendar/BellCountyTechnologyServices1@bellcountytx.onmicrosoft.com/bookings/service.svc/GetStaffBookability',
   'headers': {
-    'Connection': ' keep-alive',
-    'Content-Length': ' 167',
-    'User-Agent': ' Mozilla/5.0 (Macintosh; Intel Mac OS X 11_1_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36',
-    'DNT': ' 1',
-    'Content-Type': ' application/json; charset=UTF-8',
-    'Accept': ' */*',
-    'Origin': ' https://outlook.office365.com',
-    'Sec-Fetch-Site': ' same-origin',
-    'Sec-Fetch-Mode': ' cors',
-    'Sec-Fetch-Dest': ' empty',
-    'Accept-Encoding': ' gzip, deflate, br',
-    'Accept-Language': ' en-US,en;q=0.9',
-    'Cookie': ' ClientId=BE2D9ACA38F24040B4F9F9A3A37B3159; OIDC=1; OutlookSession=cf26724c32b8467e8997c525221825ff; ClientId=464769C1B88C47E0A6E746414E366D2D; OIDC=1',
+    'accept': '*/*',
+    'accept-language': 'en-US,en;q=0.9',
+    'content-type': 'application/json; charset=UTF-8',
+    'sec-fetch-dest': 'empty',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-site': 'same-origin',
+    'cookie': 'ClientId=BE2D9ACA38F24040B4F9F9A3A37B3159; OIDC=1; OutlookSession=62f718dc95d94dfba2817aabd4cdb90f',
   },
-  'body': '{"StaffList":["0K2vfoBvR0Gxqhjo3CzMog=="],"Start":"2021-01-31T00:00:00","End":"2021-04-02T00:00:00","TimeZone":"America/Chicago","ServiceId":"06oo6bJVYUmbCVQMl9fGmA2"}',
-
+  'referrerPolicy': 'no-referrer',
+  'body': '{"StaffList":["0K2vfoBvR0Gxqhjo3CzMog=="],"Start":"2021-02-28T00:00:00","End":"2021-05-01T00:00:00","TimeZone":"America/Chicago","ServiceId":"06oo6bJVYUmbCVQMl9fGmA2"}',
+  'method': 'POST',
+  'mode': 'cors',
 };
 
 const templeOptions = {
@@ -73,6 +67,10 @@ const beltonOptions = {
   'body': '{"StaffList":["rZKlNcMJ60u2fhfMvudNCg=="],"Start":"2021-02-28T00:00:00","End":"2021-04-02T00:00:00","TimeZone":"America/Chicago","ServiceId":"W-169pjrAkyQl0ElzvRl0A2"}',
   'method': 'POST',
   'mode': 'cors',
+};
+
+const sendSlackMessage = (bookableItems, city) => {
+
 };
 
 const checkBellCounty = async () => {
