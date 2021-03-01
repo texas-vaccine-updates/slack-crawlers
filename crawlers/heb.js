@@ -11,6 +11,11 @@ dotenv.config();
 const webhookURL = process.env.HEB_WEBHOOK_URL;
 const webhook = new IncomingWebhook(webhookURL);
 
+const excludedStores = [
+  'Lubbock H-E-B',
+  'H-E-B Pharmacy at the Medical Center Hospital',
+];
+
 const checkHeb = async () => {
   try {
     console.log('Checking HEB for vaccines...');
@@ -24,7 +29,7 @@ const checkHeb = async () => {
         if (vaccineLocations.locations.hasOwnProperty(location)) {
           const {name, openTimeslots, city, street, url} = vaccineLocations.locations[location];
 
-          if (openTimeslots > 4 && name !== 'Lubbock H-E-B' && name !== 'H-E-B Pharmacy at the Medical Center Hospital') {
+          if (openTimeslots > 4 && !excludedStores.includes(name)) {
             locationsWithVaccine[name] = {openTimeslots, city, url, street};
           }
         }
