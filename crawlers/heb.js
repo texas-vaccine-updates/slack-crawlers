@@ -15,6 +15,8 @@ const excludedStores = [
   'Lubbock H-E-B',
   'H-E-B Pharmacy at the Medical Center Hospital',
   'Huntsville H-E-B',
+  'Midland H-E-B',
+  'Midland Loop 250 H-E-B',
 ];
 
 const checkHeb = async () => {
