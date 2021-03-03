@@ -118,6 +118,4 @@ const checkBellCounty = async () => {
   }
 };
 
-checkBellCounty();
-
 module.exports = checkBellCounty;
