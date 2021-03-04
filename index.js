@@ -40,7 +40,7 @@ setIntervalAsync(
     async () => {
       await checkHeb();
     },
-    1000 * 15,
+    1000 * 10,
 );
 
 
