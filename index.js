@@ -35,12 +35,15 @@ cron.schedule(cronJobInterval, async () => {
   }
 });
 
-setIntervalAsync(
-    async () => {
-      await checkHeb();
-    },
-    1000 * 10,
-);
-
+try {
+  setIntervalAsync(
+      async () => {
+        await checkHeb();
+      },
+      1000 * 10,
+  );
+} catch (e) {
+  console.error(e);
+}
 
 app.listen(process.env.PORT);
