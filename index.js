@@ -9,13 +9,16 @@ const checkBellCounty = require('./crawlers/bell-county');
 const checkUniversity = require('./crawlers/university');
 const checkFallsHospital = require('./crawlers/falls-hospital');
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 const cronJobInterval = '*/1 * * * *';
 
 app = express();
 
-const keepaliveURL = 'https://texas-vaccines.herokuapp.com/';
+const keepaliveURL = process.env.KEEP_ALIVE_URL;
 
-app.get('/', function(req, res) {
+app.get('/alive', function(req, res) {
   res.send('Staying alive.');
 });
 
