@@ -18,7 +18,7 @@ app = express();
 
 const keepaliveURL = process.env.KEEP_ALIVE_URL;
 
-app.get(keepaliveURL + '/alive', function(req, res) {
+app.get('/', function(req, res) {
   res.send('Staying alive.');
 });
 
