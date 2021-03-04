@@ -17,7 +17,8 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "node-cron": "^2.0.3",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.1",
+    "set-interval-async": "1.0.34"
   },
   "devDependencies": {
     "eslint": "^7.19.0",

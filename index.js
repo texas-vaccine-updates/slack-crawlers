@@ -1,6 +1,8 @@
 const express = require('express');
 const cron = require('node-cron');
 const fetch = require('node-fetch');
+const {setIntervalAsync} = require('set-interval-async/dynamic');
+
 const checkHeb = require('./crawlers/heb');
 // const checkRandalls = require('./crawlers/albertsons');
 const checkAlamodome = require('./crawlers/alamodome');
@@ -24,15 +26,22 @@ cron.schedule(cronJobInterval, async () => {
     const alive = await keep.text();
     console.log(alive);
 
-    await checkHeb();
     await checkBellCounty();
     await checkAlamodome();
     await checkUniversity();
-    // await checkRandalls(); NOTE: Currently being blocked by Albertsons
     await checkFallsHospital();
+    // await checkRandalls(); NOTE: Currently being blocked by Albertsons
   } catch (error) {
     console.error(error);
   }
 });
+
+setIntervalAsync(
+    async () => {
+      await checkHeb();
+    },
+    1000 * 15,
+);
+
 
 app.listen(process.env.PORT);
