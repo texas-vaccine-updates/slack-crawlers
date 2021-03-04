@@ -22,6 +22,7 @@ Here is a `.env` file that will get you up and running. Just save it as `.env` i
 ```
 NODE_ENV=development
 PORT=666
+KEEP_ALIVE_URL=https://texas-vaccines.herokuapp.com/alive
 SLACK_WEBHOOK_URL=https://hooks.slack.com/services/BLAHBLAHBLAHBLAHBLAHBLAHBLAHBLAHBLAHBLAHBLAH
 HEB_WEBHOOK_URL=https://hooks.slack.com/services/BLAHBLAHBLAHBLAHBLAHBLAHBLAHBLAHBLAHBLAHBLAH
 ALBERTSONS_WEBHOOK_URL=https://hooks.slack.com/services/BLAHBLAHBLAHBLAHBLAHBLAHBLAHBLAHBLAHBLAHBLAH
