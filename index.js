@@ -2,7 +2,6 @@ const express = require('express');
 const cron = require('node-cron');
 const fetch = require('node-fetch');
 const {setIntervalAsync} = require('set-interval-async/dynamic');
-
 const checkHeb = require('./crawlers/heb');
 // const checkRandalls = require('./crawlers/albertsons');
 const checkAlamodome = require('./crawlers/alamodome');
