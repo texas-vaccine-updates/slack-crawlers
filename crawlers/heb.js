@@ -17,6 +17,9 @@ const excludedStores = [
   'Huntsville H-E-B',
   'Midland H-E-B',
   'Midland Loop 250 H-E-B',
+  'COVID 19 Vaccination Clinic at Waxahachie Baptist Church',
+  'University Blvd. H-E-B',
+  'COVID 19 Vaccination Clinic at Old Kerr Middle School Campus',
 ];
 
 const checkHeb = async () => {
