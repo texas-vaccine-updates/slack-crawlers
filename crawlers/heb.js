@@ -51,7 +51,7 @@ const checkHeb = async () => {
         if (openAppointmentSlots > (lastFound.openAppointmentSlots + 3)) {
           slackFields.push({
             type: 'mrkdwn',
-            text: `<${url || hebURL}|${location}>:  *${openTimeslots}* \n<https://google.com/maps/?q=${urlFriendlyAddress}|${capatilizedCity}>`,
+            text: `<${url || hebURL}|${location}>:  *${openAppointmentSlots}* \n<https://google.com/maps/?q=${urlFriendlyAddress}|${capatilizedCity}>`,
           });
         }
       }
