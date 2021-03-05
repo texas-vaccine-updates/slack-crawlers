@@ -12,7 +12,7 @@ module.exports = (url, locations) => {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: 'Click here to schedule (Direct links below):',
+          text: 'Click here to schedule (direct links below):',
         },
         accessory: {
           type: 'button',
