@@ -27,10 +27,10 @@ const checkHeb = async () => {
 
     for (location in vaccineLocations.locations) {
       if (vaccineLocations.locations.hasOwnProperty(location)) {
-        const {name, openTimeslots, city, street, url} = vaccineLocations.locations[location];
+        const {name, openAppointmentSlots, city, street, url} = vaccineLocations.locations[location];
 
-        if (openTimeslots > 3) {
-          locationsWithVaccine[name] = {name, openTimeslots, city, url, street};
+        if (openAppointmentSlots > 3) {
+          locationsWithVaccine[name] = {name, openAppointmentSlots, city, url, street};
         }
       }
     }
@@ -43,12 +43,12 @@ const checkHeb = async () => {
 
     for (location in locationsWithVaccine) {
       if (locationsWithVaccine.hasOwnProperty(location)) {
-        const {openTimeslots, city, url, street, name} = locationsWithVaccine[location];
+        const {openAppointmentSlots, city, url, street, name} = locationsWithVaccine[location];
         const capatilizedCity = capitalizeSentance(city);
         const urlFriendlyAddress = `${street.split(' ').join('+')}+${city.split(' ').join('+')}`;
         const lastFound = lastRunSlotCount.find((locale) => locale.name === name);
 
-        if (openTimeslots > (lastFound.openTimeslots + 3)) {
+        if (openAppointmentSlots > (lastFound.openAppointmentSlots + 3)) {
           slackFields.push({
             type: 'mrkdwn',
             text: `<${url || hebURL}|${location}>:  *${openTimeslots}* \n<https://google.com/maps/?q=${urlFriendlyAddress}|${capatilizedCity}>`,
