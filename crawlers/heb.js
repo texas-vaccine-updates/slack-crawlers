@@ -29,7 +29,7 @@ const checkHeb = async () => {
       if (vaccineLocations.locations.hasOwnProperty(location)) {
         const {name, openAppointmentSlots, city, street, url} = vaccineLocations.locations[location];
 
-        if (openAppointmentSlots > 3) {
+        if (openAppointmentSlots > 4) {
           locationsWithVaccine[name] = {name, openAppointmentSlots, city, url, street};
         }
       }
@@ -48,7 +48,7 @@ const checkHeb = async () => {
         const urlFriendlyAddress = `${street.split(' ').join('+')}+${city.split(' ').join('+')}`;
         const lastFound = lastRunSlotCount.find((locale) => locale.name === name);
 
-        if (openAppointmentSlots > (lastFound.openAppointmentSlots + 3)) {
+        if (openAppointmentSlots > (lastFound.openAppointmentSlots + 4)) {
           slackFields.push({
             type: 'mrkdwn',
             text: `<${url || hebURL}|${location}>:  *${openAppointmentSlots}* \n<https://google.com/maps/?q=${urlFriendlyAddress}|${capatilizedCity}>`,
