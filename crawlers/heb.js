@@ -19,6 +19,14 @@ const excludedCities = [
   'mcallen',
 ];
 
+const extractSlotDetails = (slotDetails) => {
+  const manufacturers = slotDetails.map((deets) => {
+    return deets.manufacturer;
+  });
+
+  return manufacturers.join(' ');
+};
+
 const checkHeb = async () => {
   try {
     console.log('Checking HEB for vaccines...');
@@ -33,10 +41,12 @@ const checkHeb = async () => {
 
     for (location in vaccineLocations.locations) {
       if (vaccineLocations.locations.hasOwnProperty(location)) {
-        const {name, openAppointmentSlots, city, street, url} = vaccineLocations.locations[location];
+        const {name, openAppointmentSlots, city, street, url, slotDetails} = vaccineLocations.locations[location];
+        const manufacturers = extractSlotDetails(slotDetails);
+
 
         if (openAppointmentSlots > 4 && !excludedCities.includes(city.toLowerCase())) {
-          locationsWithVaccine[name] = {name, openAppointmentSlots, city, url, street};
+          locationsWithVaccine[name] = {name, openAppointmentSlots, city, url, street, manufacturers};
         }
       }
     }
@@ -49,7 +59,7 @@ const checkHeb = async () => {
 
     for (location in locationsWithVaccine) {
       if (locationsWithVaccine.hasOwnProperty(location)) {
-        const {openAppointmentSlots, city, url, street, name} = locationsWithVaccine[location];
+        const {openAppointmentSlots, city, url, street, name, manufacturers} = locationsWithVaccine[location];
         const capatilizedCity = capitalizeSentance(city);
         const urlFriendlyAddress = `${street.split(' ').join('+')}+${city.split(' ').join('+')}`;
         const lastFound = lastRunSlotCount.find((locale) => locale.name === name);
@@ -57,7 +67,7 @@ const checkHeb = async () => {
         if (openAppointmentSlots > (lastFound.openAppointmentSlots + 4)) {
           slackFields.push({
             type: 'mrkdwn',
-            text: `<${url || hebURL}|${location}>:  *${openAppointmentSlots}* \n<https://google.com/maps/?q=${urlFriendlyAddress}|${capatilizedCity}>`,
+            text: `<${url || hebURL}|${location}>:  *${openAppointmentSlots}* \n<https://google.com/maps/?q=${urlFriendlyAddress}|${capatilizedCity}> \n${manufacturers}`,
           });
         }
       }
