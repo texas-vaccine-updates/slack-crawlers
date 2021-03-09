@@ -73,7 +73,7 @@ const checkBellCounty = async () => {
 
     const fiveMins = 1000 * 60 * 5;
 
-    if (killeenBookableItems.length > 0 && now > (lastBookedKilleen + fiveMins) && killeenBookableItems[0].Id !== '1CuEvHmc2UWCUVBjhr0Lvg2') {
+    if (killeenBookableItems.length > 0 && now > (lastBookedKilleen + fiveMins) && killeenBookableItems[0].Id !== '_lK5UnnqAEeKZ0MHIHI1kg2') {
       lastBookedKilleen = now;
       const slackMessage = renderBellSlackMessage(killeenScheduleURL, 'Killeen');
       await webhook.send(slackMessage);
