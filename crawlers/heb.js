@@ -19,13 +19,9 @@ const excludedCities = [
   'mcallen',
 ];
 
-const extractSlotDetails = (slotDetails) => {
-  const manufacturers = slotDetails.map((deets) => {
-    return deets.manufacturer;
-  });
+const slotThreshold = 4;
 
-  return manufacturers.join(' ');
-};
+const extractSlotDetails = (slotDetails) => slotDetails.map((deets) => deets.manufacturer).join(' ');
 
 const checkHeb = async () => {
   try {
@@ -45,7 +41,7 @@ const checkHeb = async () => {
         const manufacturers = extractSlotDetails(slotDetails);
 
 
-        if (openAppointmentSlots > 4 && !excludedCities.includes(city.toLowerCase())) {
+        if (openAppointmentSlots > slotThreshold && !excludedCities.includes(city.toLowerCase())) {
           locationsWithVaccine[name] = {name, openAppointmentSlots, city, url, street, manufacturers};
         }
       }
@@ -64,7 +60,7 @@ const checkHeb = async () => {
         const urlFriendlyAddress = `${street.split(' ').join('+')}+${city.split(' ').join('+')}`;
         const lastFound = lastRunSlotCount.find((locale) => locale.name === name);
 
-        if (openAppointmentSlots > (lastFound.openAppointmentSlots + 4)) {
+        if (openAppointmentSlots > (lastFound.openAppointmentSlots + slotThreshold)) {
           slackFields.push({
             type: 'mrkdwn',
             text: `<${url || hebURL}|${location}>:  *${openAppointmentSlots}* \n<https://google.com/maps/?q=${urlFriendlyAddress}|${capatilizedCity}> \n${manufacturers}`,
