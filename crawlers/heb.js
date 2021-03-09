@@ -19,9 +19,9 @@ const excludedCities = [
   'mcallen',
 ];
 
-const slotThreshold = 4;
+const slotThreshold = 3;
 
-const extractSlotDetails = (slotDetails) => slotDetails.map((deets) => deets.manufacturer).join(' ');
+const extractSlotDetails = (slotDetails) => slotDetails.map((deets) => deets.manufacturer).join(', ');
 
 const checkHeb = async () => {
   try {
