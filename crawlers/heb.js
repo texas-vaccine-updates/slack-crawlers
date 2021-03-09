@@ -15,6 +15,8 @@ let lastRunSlotCount = [];
 
 const excludedCities = [
   'odessa',
+  'midland',
+  'mcallen',
 ];
 
 const checkHeb = async () => {
