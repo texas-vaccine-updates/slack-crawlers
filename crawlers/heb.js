@@ -13,6 +13,10 @@ const webhook = new IncomingWebhook(webhookURL);
 
 let lastRunSlotCount = [];
 
+const excludedCities = [
+  'odessa',
+];
+
 const checkHeb = async () => {
   try {
     console.log('Checking HEB for vaccines...');
@@ -29,7 +33,7 @@ const checkHeb = async () => {
       if (vaccineLocations.locations.hasOwnProperty(location)) {
         const {name, openAppointmentSlots, city, street, url} = vaccineLocations.locations[location];
 
-        if (openAppointmentSlots > 4) {
+        if (openAppointmentSlots > 4 && !excludedCities.includes(city.toLowerCase())) {
           locationsWithVaccine[name] = {name, openAppointmentSlots, city, url, street};
         }
       }
