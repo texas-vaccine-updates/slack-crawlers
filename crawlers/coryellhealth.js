@@ -70,11 +70,11 @@ const body = {
       hasConsumerScheduling: true,
       isActive: true,
       organizationIsActive: true,
-      // procedureId: "a562eea5-c72b-4032-b2ba-1c15f3b444bb", // dose 1
-      procedureId: "2318f28d-fc58-4181-a09b-2354e181c475", // for dose 2
+      procedureId: "a562eea5-c72b-4032-b2ba-1c15f3b444bb", // dose 1
+      // procedureId: "2318f28d-fc58-4181-a09b-2354e181c475", // for dose 2
       sort: "NEXT_AVAILABILITY",
-      // specialtyId: "45a5acfb-ce82-473a-b320-7f415658031b", // dose 1
-      specialtyId: "45a5acfb-ce82-473a-b320-7f415658031b", //for dose 2
+      specialtyId: "45a5acfb-ce82-473a-b320-7f415658031b", // dose 1
+      // specialtyId: "45a5acfb-ce82-473a-b320-7f415658031b", //for dose 2
     },
   }
 }
