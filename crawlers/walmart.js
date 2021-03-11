@@ -32,7 +32,6 @@ const checkWalmart = async () => {
       const urlFriendlyAddress = `${address.split(' ').join('+')}}`;
       const lastFound = lastRunSlotCount.find((locale) => locale.properties.id === id);
 
-      console.log(name, appointments.length, lastFound.properties.appointments.length);
       if (appointments.length > (lastFound.properties.appointments.length + 3)) {
         slackFields.push({
           type: 'mrkdwn',
