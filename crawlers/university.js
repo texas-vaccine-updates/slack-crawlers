@@ -1,13 +1,11 @@
+require('dotenv').config();
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
-const dotenv = require('dotenv');
 const {IncomingWebhook} = require('@slack/webhook');
 const renderStaticSlackMessage = require('../utils/renderStaticSlackMessage');
 const getDateString = require('../utils/getDateString');
 const isEmpty = require('../utils/isEmpty');
 const universityURL = 'https://mychart-openscheduling.et1130.epichosted.com/MyChart/SignupAndSchedule/EmbeddedSchedule?id=51585&dept=10554002&vt=1788&view=grouped';
-
-dotenv.config();
 
 const url = process.env.UNIVERSITY_WEBHOOK_URL;
 const webhook = new IncomingWebhook(url);

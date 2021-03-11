@@ -1,9 +1,7 @@
+require('dotenv').config();
 const fetch = require('node-fetch');
-const dotenv = require('dotenv');
 const {IncomingWebhook} = require('@slack/webhook');
 const renderBellSlackMessage = require('../utils/renderBellSlackMessage');
-
-dotenv.config();
 
 const url = process.env.BELL_WEBHOOK_URL;
 const webhook = new IncomingWebhook(url);

@@ -1,11 +1,9 @@
+require('dotenv').config();
 const fetch = require('node-fetch');
-const dotenv = require('dotenv');
 const {IncomingWebhook} = require('@slack/webhook');
 const renderDomeSlackMessage = require('../utils/renderDomeSlackMessage');
 const alamoURL = 'https://patportal.cdpehs.com/ezEMRxPHR/html/login/newPortalReg.jsp';
 const alamoAPI = 'https://patportal.cdpehs.com/ezEMRxPHR/dwr/exec/AppointmentSchdlrAction.getMassProgramScheduleDet.dwr';
-
-dotenv.config();
 
 const url = process.env.ALAMO_WEBHOOK_URL;
 const webhook = new IncomingWebhook(url);
