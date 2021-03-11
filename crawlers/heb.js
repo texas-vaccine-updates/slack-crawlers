@@ -1,12 +1,10 @@
+require('dotenv').config();
 const fetch = require('node-fetch');
-const dotenv = require('dotenv');
 const {IncomingWebhook} = require('@slack/webhook');
 const renderSlackMessage = require('../utils/renderSlackMessage');
 const capitalizeSentance = require('../utils/capitalizeSentance');
 const hebURL = 'https://heb-ecom-covid-vaccine.hebdigital-prd.com/vaccine_locations.json';
 const scheduleURL = 'https://vaccine.heb.com/scheduler';
-
-dotenv.config();
 
 const webhookURL = process.env.HEB_WEBHOOK_URL;
 const webhook = new IncomingWebhook(webhookURL);

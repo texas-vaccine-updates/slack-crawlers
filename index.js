@@ -1,16 +1,14 @@
+require('dotenv').config();
 const express = require('express');
 const cron = require('node-cron');
 const fetch = require('node-fetch');
 const {setIntervalAsync} = require('set-interval-async/dynamic');
 const checkHeb = require('./crawlers/heb');
-// const checkRandalls = require('./crawlers/albertsons');
 const checkAlamodome = require('./crawlers/alamodome');
 const checkBellCounty = require('./crawlers/bell-county');
 const checkUniversity = require('./crawlers/university');
 const checkFallsHospital = require('./crawlers/falls-hospital');
-
-const dotenv = require('dotenv');
-dotenv.config();
+const checkWalmart = require('./crawlers/walmart');
 
 const cronJobInterval = '*/1 * * * *';
 
@@ -32,7 +30,7 @@ cron.schedule(cronJobInterval, async () => {
     await checkAlamodome();
     await checkUniversity();
     await checkFallsHospital();
-    // await checkRandalls(); NOTE: Currently being blocked by Albertsons
+    await checkWalmart();
   } catch (error) {
     console.error(error);
   }

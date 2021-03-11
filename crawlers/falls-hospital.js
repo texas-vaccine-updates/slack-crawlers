@@ -1,11 +1,9 @@
+require('dotenv').config();
 const fetch = require('node-fetch');
-const dotenv = require('dotenv');
 const {IncomingWebhook} = require('@slack/webhook');
 const getDateString = require('../utils/getDateString');
 const renderFallsSlackMessage = require('../utils/renderFallsSlackMessage');
 const scheduleURL = 'https://covid.fallshospital.com/schedule/';
-
-dotenv.config();
 
 const webhookURL = process.env.FALLSHOSPITAL_WEBHOOK_URL;
 const webhook = new IncomingWebhook(webhookURL);
