@@ -17,8 +17,9 @@ const checkWalmart = async () => {
 
 
     const walmartStores = data.features.filter((location) => {
-      const {provider_brand, appointments_available} = location.properties;
-      return provider_brand === 'walmart' && appointments_available;
+      const {provider_brand, appointments} = location.properties;
+      console.log(location);
+      return provider_brand === 'walmart' && appointments?.length > 3;
     });
 
     if (lastRunSlotCount.length === 0) {
