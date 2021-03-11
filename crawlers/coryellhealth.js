@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 const dotenv = require('dotenv');
-const { IncomingWebhook } = require('@slack/webhook');
+const {IncomingWebhook} = require('@slack/webhook');
 const renderSlackMessage = require('../utils/renderSlackMessage');
 
 const coryellURL = 'https://app.blockitnow.com/consumer/coryell-health/search?specialtyId=45a5acfb-ce82-473a-b320-7f415658031b&procedureId=a562eea5-c72b-4032-b2ba-1c15f3b444bb';
@@ -61,33 +61,33 @@ const query = `query SearchProfilesInOrganizationQuery($organizationId: ID!, $pa
 }`;
 const body = {
   query,
-  operationName: "SearchProfilesInOrganizationQuery",
+  operationName: 'SearchProfilesInOrganizationQuery',
   variables: {
-    organizationId: "abed2f58-0508-45c3-97bd-2ba4659c7942",
+    organizationId: 'abed2f58-0508-45c3-97bd-2ba4659c7942',
     page: 1,
     pageSize: 10,
     searchProfilesInput: {
       hasConsumerScheduling: true,
       isActive: true,
       organizationIsActive: true,
-      procedureId: "a562eea5-c72b-4032-b2ba-1c15f3b444bb", // dose 1
+      procedureId: 'a562eea5-c72b-4032-b2ba-1c15f3b444bb', // dose 1
       // procedureId: "2318f28d-fc58-4181-a09b-2354e181c475", // for dose 2
-      sort: "NEXT_AVAILABILITY",
-      specialtyId: "45a5acfb-ce82-473a-b320-7f415658031b", // dose 1
+      sort: 'NEXT_AVAILABILITY',
+      specialtyId: '45a5acfb-ce82-473a-b320-7f415658031b', // dose 1
       // specialtyId: "45a5acfb-ce82-473a-b320-7f415658031b", //for dose 2
     },
-  }
-}
+  },
+};
 
 const headers = {
-    'accept': '*/*',
-    'accept-language': 'en-US,en;q=0.9',
-    'content-type': 'application/json',
-    'sec-fetch-dest': 'empty',
-    'sec-fetch-mode': 'cors',
-    'sec-fetch-site': 'same-site',
-    'content-length': '1381',
-    'origin': 'https://app.blockitnow.com',
+  'accept': '*/*',
+  'accept-language': 'en-US,en;q=0.9',
+  'content-type': 'application/json',
+  'sec-fetch-dest': 'empty',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-site': 'same-site',
+  'content-length': '1381',
+  'origin': 'https://app.blockitnow.com',
 };
 
 const clinicsWithAppointments = [];
@@ -108,19 +108,18 @@ const checkCoryell = async () => {
           console.error(e);
         }
 
-        result.data.searchProfilesInOrganization.forEach(org => {
-          const { displayName, nextAvailability } = org;
+        result.data.searchProfilesInOrganization.forEach((org) => {
+          const {displayName, nextAvailability} = org;
 
           if (nextAvailability) {
-            clinicsWithAppointments.push({ store: displayName, nextAvailability })
+            clinicsWithAppointments.push({store: displayName, nextAvailability});
           }
         });
-
       }
     });
 
     const slackFields = clinicsWithAppointments.map((clinic) => (
-      { type: 'mrkdwn', text: clinic.name, }
+      {type: 'mrkdwn', text: clinic.name}
     ));
 
     if (slackFields.length > 10) {
@@ -130,10 +129,9 @@ const checkCoryell = async () => {
       const slackMessage = renderSlackMessage(coryellURL, slackFields);
       await webhook.send(slackMessage);
     }
-
   } catch (e) {
     console.error(e);
   }
-}
+};
 
 module.exports = checkCoryell;
