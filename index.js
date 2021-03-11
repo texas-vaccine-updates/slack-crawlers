@@ -8,7 +8,11 @@ const checkAlamodome = require('./crawlers/alamodome');
 const checkBellCounty = require('./crawlers/bell-county');
 const checkUniversity = require('./crawlers/university');
 const checkFallsHospital = require('./crawlers/falls-hospital');
+const checkCoryell = require('./crawlers/coryellhealth');
 const checkWalmart = require('./crawlers/walmart');
+
+const dotenv = require('dotenv');
+dotenv.config();
 
 const cronJobInterval = '*/1 * * * *';
 
@@ -30,6 +34,8 @@ cron.schedule(cronJobInterval, async () => {
     await checkAlamodome();
     await checkUniversity();
     await checkFallsHospital();
+    // await checkRandalls(); NOTE: Currently being blocked by Albertsons
+    await checkCoryell();
     await checkWalmart();
   } catch (error) {
     console.error(error);
