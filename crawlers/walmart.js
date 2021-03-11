@@ -18,7 +18,6 @@ const checkWalmart = async () => {
 
     const walmartStores = data.features.filter((location) => {
       const {provider_brand, appointments} = location.properties;
-      console.log(appointments, location);
       return provider_brand === 'walmart' && (appointments && appointments.length > 3);
     });
 
