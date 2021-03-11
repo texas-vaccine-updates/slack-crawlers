@@ -25,19 +25,20 @@ const checkWalmart = async () => {
       lastRunSlotCount = walmartStores;
     }
 
-    const slackFields = walmartStores.map((store) => {
-      const {city, name, address, appointments, postal_code} = store.properties;
+    const slackFields = [];
+
+    walmartStores.forEach((store) => {
+      const {id, city, name, address, appointments, postal_code} = store.properties;
       const urlFriendlyAddress = `${address.split(' ').join('+')}}`;
-      const lastFound = lastRunSlotCount.find((locale) => locale.properties.name === name);
+      const lastFound = lastRunSlotCount.find((locale) => locale.properties.id === id);
 
-      if (appointments.length < lastFound.properties.appointments.length) {
-        return;
+      console.log(name, appointments.length, lastFound.properties.appointments.length);
+      if (appointments.length > (lastFound.properties.appointments.length + 3)) {
+        slackFields.push({
+          type: 'mrkdwn',
+          text: `<${scheduleURL}|${name}>:  *${appointments.length}* \n<https://google.com/maps/?q=${urlFriendlyAddress}|${city}, ${postal_code}>`,
+        });
       }
-
-      return {
-        type: 'mrkdwn',
-        text: `<${scheduleURL}|${name}>:  *${appointments.length}* \n<https://google.com/maps/?q=${urlFriendlyAddress}|${city}, ${postal_code}>`,
-      };
     });
 
     if (slackFields.length > 10) {
