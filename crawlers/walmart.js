@@ -18,6 +18,7 @@ const checkWalmart = async () => {
 
     const walmartStores = data.features.filter((location) => {
       const {provider_brand, appointments} = location.properties;
+      console.log(location.properties);
       return provider_brand === 'walmart' && (appointments && appointments.length > 3);
     });
 
@@ -32,7 +33,7 @@ const checkWalmart = async () => {
       const urlFriendlyAddress = `${address.split(' ').join('+')}}`;
       const lastFound = lastRunSlotCount.find((locale) => locale.properties.id === id);
 
-      if (appointments.length > (lastFound.properties.appointments.length + 3)) {
+      if (appointments.length > (lastFound?.properties.appointments.length + 3)) {
         slackFields.push({
           type: 'mrkdwn',
           text: `<${scheduleURL}|${name}>:  *${appointments.length}* \n<https://google.com/maps/?q=${urlFriendlyAddress}|${city}, ${postal_code}>`,
