@@ -21,9 +21,7 @@ const checkWalmart = async () => {
       return provider_brand === 'walmart' && (appointments && appointments.length > 3);
     });
 
-    if (lastRunSlotCount.length === 0) {
-      lastRunSlotCount = walmartStores;
-    }
+    if (lastRunSlotCount.length === 0) lastRunSlotCount = walmartStores;
 
     const slackFields = [];
 
