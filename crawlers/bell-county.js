@@ -16,13 +16,15 @@ const killeenOptions = {
     'accept': '*/*',
     'accept-language': 'en-US,en;q=0.9',
     'content-type': 'application/json; charset=UTF-8',
+    'sec-ch-ua': '"Google Chrome";v="89", "Chromium";v="89", ";Not A Brand";v="99"',
+    'sec-ch-ua-mobile': '?0',
     'sec-fetch-dest': 'empty',
     'sec-fetch-mode': 'cors',
     'sec-fetch-site': 'same-origin',
-    'cookie': 'ClientId=BE2D9ACA38F24040B4F9F9A3A37B3159; OIDC=1; OutlookSession=890eac6c2e6746a0a8b8a8ec32d7f437',
+    'cookie': 'ClientId=BE2D9ACA38F24040B4F9F9A3A37B3159; OIDC=1; OutlookSession=dd8fb5e91c494cd48c128a97330eca17',
   },
   'referrerPolicy': 'no-referrer',
-  'body': '{"StaffList":["0K2vfoBvR0Gxqhjo3CzMog=="],"Start":"2021-03-07T00:00:00","End":"2021-05-02T00:00:00","TimeZone":"America/Chicago","ServiceId":"06oo6bJVYUmbCVQMl9fGmA2"}',
+  'body': '{"StaffList":["0K2vfoBvR0Gxqhjo3CzMog=="],"Start":"2021-03-14T00:00:00","End":"2021-05-02T00:00:00","TimeZone":"America/Chicago","ServiceId":"06oo6bJVYUmbCVQMl9fGmA2"}',
   'method': 'POST',
   'mode': 'cors',
 };
@@ -69,14 +71,14 @@ const checkBellCounty = async () => {
       console.error(e);
     }
 
-    const fiveMins = 1000 * 60 * 5;
+    const interval = 1000 * 60 * 10;
 
-    if (killeenBookableItems.length > 0 && now > (lastBookedKilleen + fiveMins) && killeenBookableItems[0].Id !== '_lK5UnnqAEeKZ0MHIHI1kg2') {
+    if (killeenBookableItems.length > 0 && now > (lastBookedKilleen + interval) && killeenBookableItems[0].Id !== '_lK5UnnqAEeKZ0MHIHI1kg2') {
       lastBookedKilleen = now;
       const slackMessage = renderBellSlackMessage(killeenScheduleURL, 'Killeen');
       await webhook.send(slackMessage);
     }
-    if (beltonBookableItems.length > 0 && now > (lastBookedBelton + fiveMins)) {
+    if (beltonBookableItems.length > 0 && now > (lastBookedBelton + interval)) {
       lastBookedBelton = now;
       const slackMessage = renderBellSlackMessage(beltonScheduleURL, 'Belton');
       await webhook.send(slackMessage);
