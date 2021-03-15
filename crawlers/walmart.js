@@ -33,8 +33,6 @@ const checkWalmart = async () => {
       lastRunSlotCount = walmartStores;
     }
 
-    console.log(walmartStores[3].properties.appointments);
-
     const slackFields = [];
 
     walmartStores.forEach((store) => {
