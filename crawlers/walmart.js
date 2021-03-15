@@ -11,6 +11,7 @@ const webhook = new IncomingWebhook(webhookURL);
 let lastRunSlotCount = [];
 
 const checkWalmart = async () => {
+  console.log('Checking Walmart for vaccines...');
   try {
     const response = await fetch(walmartURL);
     const data = await response.json();
@@ -25,6 +26,8 @@ const checkWalmart = async () => {
       lastRunSlotCount = walmartStores;
     }
 
+    console.log(walmartStores[3].properties.appointments);
+
     const slackFields = [];
 
     walmartStores.forEach((store) => {
@@ -32,7 +35,7 @@ const checkWalmart = async () => {
       const urlFriendlyAddress = `${address.split(' ').join('+')}}`;
       const lastFound = lastRunSlotCount.find((locale) => locale.properties.id === id);
 
-      if (appointments.length > (lastFound?.properties.appointments.length + 3)) {
+      if (appointments.length >= (lastFound.properties.appointments.length) && city === 'Austin') {
         slackFields.push({
           type: 'mrkdwn',
           text: `<${scheduleURL}|${name}>:  *${appointments.length}* \n<https://google.com/maps/?q=${urlFriendlyAddress}|${city}, ${postal_code}>`,
@@ -54,5 +57,7 @@ const checkWalmart = async () => {
     console.error(e);
   }
 };
+
+checkWalmart();
 
 module.exports = checkWalmart;
