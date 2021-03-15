@@ -10,6 +10,13 @@ const webhook = new IncomingWebhook(webhookURL);
 
 let lastRunSlotCount = [];
 
+const includedCities = [
+  'austin',
+  'cedar park',
+  'buda',
+
+];
+
 const checkWalmart = async () => {
   console.log('Checking Walmart for vaccines...');
   try {
@@ -33,9 +40,9 @@ const checkWalmart = async () => {
     walmartStores.forEach((store) => {
       const {id, city, name, address, appointments, postal_code} = store.properties;
       const urlFriendlyAddress = `${address.split(' ').join('+')}}`;
-      const lastFound = lastRunSlotCount.find((locale) => locale.properties.id === id);
+      const lastFound = lastRunSlotCount.find((locale) => locale.properties.id === id) || [];
 
-      if (appointments.length > (lastFound.properties.appointments.length) && city === 'Austin') {
+      if (appointments.length >= (lastFound.properties.appointments.length)) {
         slackFields.push({
           type: 'mrkdwn',
           text: `<${scheduleURL}|${name}>:  *${appointments.length}* \n<https://google.com/maps/?q=${urlFriendlyAddress}|${city}, ${postal_code}>`,
