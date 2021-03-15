@@ -35,7 +35,7 @@ const checkWalmart = async () => {
       const urlFriendlyAddress = `${address.split(' ').join('+')}}`;
       const lastFound = lastRunSlotCount.find((locale) => locale.properties.id === id);
 
-      if (appointments.length >= (lastFound.properties.appointments.length) && city === 'Austin') {
+      if (appointments.length > (lastFound.properties.appointments.length) && city === 'Austin') {
         slackFields.push({
           type: 'mrkdwn',
           text: `<${scheduleURL}|${name}>:  *${appointments.length}* \n<https://google.com/maps/?q=${urlFriendlyAddress}|${city}, ${postal_code}>`,
