@@ -18,6 +18,9 @@ const excludedCities = [
   'harlingen',
   'falfurrias',
   'mission',
+  'san angelo',
+  'mont belvieu',
+  'port arthur',
 ];
 
 const slotThreshold = 4;
