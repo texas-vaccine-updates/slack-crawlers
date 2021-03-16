@@ -47,7 +47,7 @@ try {
       async () => {
         await checkHeb();
       },
-      1000 * 10,
+      1000 * 5,
   );
 } catch (e) {
   console.error(e);
