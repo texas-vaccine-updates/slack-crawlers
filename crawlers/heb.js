@@ -35,12 +35,12 @@ const checkHeb = async () => {
 
     for (location in vaccineLocations.locations) {
       if (vaccineLocations.locations.hasOwnProperty(location)) {
-        const {name, openAppointmentSlots, city, street, url, slotDetails} = vaccineLocations.locations[location];
+        const {name, openTimeslots, openAppointmentSlots, city, street, url, slotDetails} = vaccineLocations.locations[location];
         const manufacturers = extractSlotDetails(slotDetails);
 
 
         if (openAppointmentSlots > slotThreshold && !excludedCities.includes(city.toLowerCase())) {
-          locationsWithVaccine[name] = {name, openAppointmentSlots, city, url, street, manufacturers};
+          locationsWithVaccine[name] = {name, openTimeslots, openAppointmentSlots, city, url, street, manufacturers};
         }
       }
     }
@@ -53,7 +53,7 @@ const checkHeb = async () => {
 
     for (location in locationsWithVaccine) {
       if (locationsWithVaccine.hasOwnProperty(location)) {
-        const {openAppointmentSlots, city, url, street, name, manufacturers} = locationsWithVaccine[location];
+        const {openTimeslots, openAppointmentSlots, city, url, street, name, manufacturers} = locationsWithVaccine[location];
         const capatilizedCity = capitalizeSentance(city);
         const urlFriendlyAddress = `${street.split(' ').join('+')}+${city.split(' ').join('+')}`;
         const lastFound = lastRunSlotCount.find((locale) => locale.name === name);
@@ -61,7 +61,7 @@ const checkHeb = async () => {
         if (openAppointmentSlots > (lastFound.openAppointmentSlots + slotThreshold)) {
           slackFields.push({
             type: 'mrkdwn',
-            text: `<${url || hebURL}|${location}>:  *${openAppointmentSlots}* \n<https://google.com/maps/?q=${urlFriendlyAddress}|${capatilizedCity}> \n${manufacturers}`,
+            text: `<${url || hebURL}|${location}>\n<https://google.com/maps/?q=${urlFriendlyAddress}|${capatilizedCity}>\n${openTimeslots} time ${openTimeslots <= 1 ? 'slot' : 'slots'}, *${openAppointmentSlots}* spots available\n${manufacturers}\n---\n`,
           });
         }
       }
