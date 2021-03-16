@@ -17,6 +17,7 @@ const excludedCities = [
   'mcallen',
   'harlingen',
   'falfurrias',
+  'mission',
 ];
 
 const slotThreshold = 4;
