@@ -15,6 +15,7 @@ const excludedCities = [
   'odessa',
   'midland',
   'mcallen',
+  'harlingen',
 ];
 
 const slotThreshold = 4;
