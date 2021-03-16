@@ -26,7 +26,7 @@ const checkWalmart = async () => {
 
     const walmartStores = data.features.filter((location) => {
       const {provider_brand, appointments} = location.properties;
-      return provider_brand === 'walmart' && (appointments && appointments.length > 3);
+      return provider_brand === 'walmart' && appointments?.length > 3;
     });
 
     if (lastRunSlotCount.length === 0) {
@@ -38,7 +38,7 @@ const checkWalmart = async () => {
     walmartStores.forEach((store) => {
       const {id, city, name, appointments, postal_code} = store.properties;
       const lastFound = lastRunSlotCount.find((locale) => locale.properties.id === id);
-      const lastRunLength = lastFound.properties.appointments.length || 0;
+      const lastRunLength = lastFound?.properties.appointments?.length || 0;
 
       if (appointments.length > lastRunLength) {
         slackFields.push({
@@ -62,5 +62,7 @@ const checkWalmart = async () => {
     console.error(e);
   }
 };
+
+checkWalmart();
 
 module.exports = checkWalmart;
