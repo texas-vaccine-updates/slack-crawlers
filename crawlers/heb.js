@@ -61,7 +61,7 @@ const checkHeb = async () => {
         if (openAppointmentSlots >= (lastFound.openAppointmentSlots + slotThreshold)) {
           slackFields.push({
             type: 'mrkdwn',
-            text: `<${url || hebURL}|${location}>\n<https://google.com/maps/?q=${urlFriendlyAddress}|${capatilizedCity}>\n*${openTimeslots}* time ${openTimeslots <= 1 ? 'slot' : 'slots'}, *${openAppointmentSlots}* spots available\n${manufacturers}\n---\n`,
+            text: `<${url || hebURL}|${location}>\n<https://google.com/maps/?q=${urlFriendlyAddress}|${capatilizedCity}>\n*${openTimeslots}* ${openTimeslots <= 1 ? 'slot' : 'slots'}, *${openAppointmentSlots}* spots\n${manufacturers}\n---\n`,
           });
         }
       }
