@@ -22,6 +22,8 @@ const checkWalmart = async () => {
       return provider_brand === 'walgreens' && appointments?.length > 3;
     });
 
+    console.log(walmartStores);
+
     if (lastRunSlotCount.length === 0) {
       lastRunSlotCount = walmartStores;
     }
