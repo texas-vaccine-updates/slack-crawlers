@@ -65,10 +65,10 @@ const checkUniversity = async () => {
     console.error(e);
   }
 
-  const appointmentCount = jp.query(data, '$..AppointmentTimeISO').length;
-
+  const appointmentCount = jp.query(data, '$.AllDays..AppointmentTimeISO').length;
+  console.log(appointmentCount)
   if (appointmentCount > 0) {
-    const message = appointmentCount == 1 ? `*${appointmentCount}* slot` : `*${appointmentCount}* slots`
+    const message = appointmentCount === 1 ? `*${appointmentCount}* slot` : `*${appointmentCount}* slots`
     try {
       await webhook.send(renderUniversitySlackMessage(universityURL, message));
     } catch (e) {
