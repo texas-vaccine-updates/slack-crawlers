@@ -1,8 +1,9 @@
 require('dotenv').config();
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
+const jp = require('jsonpath');
 const {IncomingWebhook} = require('@slack/webhook');
-const renderStaticSlackMessage = require('../utils/renderStaticSlackMessage');
+const renderUniversitySlackMessage = require('../utils/renderUniversitySlackMessage');
 const getDateString = require('../utils/getDateString');
 const isEmpty = require('../utils/isEmpty');
 const universityURL = 'https://mychart-openscheduling.et1130.epichosted.com/MyChart/SignupAndSchedule/EmbeddedSchedule?id=51585&dept=10554002&vt=1788&view=grouped';
@@ -63,9 +64,13 @@ const checkUniversity = async () => {
   } catch (e) {
     console.error(e);
   }
-  if (!isEmpty(data.AllDays)) {
+
+  const appointmentCount = jp.query(data, '$.AllDays..AppointmentTimeISO').length;
+
+  if (appointmentCount > 0) {
+    const message = appointmentCount === 1 ? `*${appointmentCount}* slot` : `*${appointmentCount}* slots`
     try {
-      await webhook.send(renderStaticSlackMessage(universityURL));
+      await webhook.send(renderUniversitySlackMessage(universityURL, message));
     } catch (e) {
       console.error(e);
     }
