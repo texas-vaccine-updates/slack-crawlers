@@ -2,6 +2,7 @@ require('dotenv').config();
 const fetch = require('node-fetch');
 const {IncomingWebhook} = require('@slack/webhook');
 const renderSlackMessage = require('../utils/renderSlackMessage');
+const capitalizeSentance = require('../utils/capitalizeSentance');
 const walgreensURL = 'https://www.vaccinespotter.org/api/v0/states/TX.json';
 const scheduleURL = 'https://www.walgreens.com/findcare/vaccination/covid-19/location-screening';
 
@@ -32,11 +33,12 @@ const checkWalgreens = async () => {
       const {id, city, name, appointments, postal_code} = store.properties;
       const lastFound = lastRunSlotCount.find((locale) => locale.properties.id === id);
       const lastRunLength = lastFound?.properties.appointments?.length || 0;
+      const prettyCity = capitalizeSentance(city);
 
       if (appointments.length > (lastRunLength + 3)) {
         slackFields.push({
           type: 'mrkdwn',
-          text: `<${scheduleURL}|${name}>:  *${appointments.length}* \n<https://google.com/maps/?q=${postal_code}|${city}, ${postal_code}>`,
+          text: `<${scheduleURL}|${name}>:  *${appointments.length}* \n<https://google.com/maps/?q=${postal_code}|${prettyCity}, ${postal_code}>`,
         });
       }
     });
