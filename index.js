@@ -12,8 +12,6 @@ const checkFallsHospital = require('./crawlers/falls-hospital');
 const checkWalmart = require('./crawlers/walmart');
 const checkWalgreens = require('./crawlers/walgreens');
 
-dotenv.config();
-
 const cronJobInterval = '*/1 * * * *';
 
 app = express();
