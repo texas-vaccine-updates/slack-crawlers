@@ -33,7 +33,7 @@ const checkWalgreens = async () => {
       const lastFound = lastRunSlotCount.find((locale) => locale.properties.id === id);
       const lastRunLength = lastFound?.properties.appointments?.length || 0;
 
-      if (appointments.length > (lastRunLength + 3)) {
+      if (appointments.length) {
         slackFields.push({
           type: 'mrkdwn',
           text: `<${scheduleURL}|${name}>:  *${appointments.length}* \n<https://google.com/maps/?q=${postal_code}|${city}, ${postal_code}>`,
