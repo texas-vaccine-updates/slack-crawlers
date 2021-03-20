@@ -4,7 +4,7 @@ const {IncomingWebhook} = require('@slack/webhook');
 const renderSlackMessage = require('../utils/renderSlackMessage');
 const capitalizeSentance = require('../utils/capitalizeSentance');
 const walgreensURL = 'https://www.vaccinespotter.org/api/v0/states/TX.json';
-const scheduleURL = 'https://www.walgreens.com/findcare/vaccination/covid-19/location-screening';
+const scheduleURL = 'https://www.walgreens.com/findcare/vaccination/covid-19';
 
 const webhookURL = process.env.WALGREENS_WEBHOOK_URL;
 const webhook = new IncomingWebhook(webhookURL);
