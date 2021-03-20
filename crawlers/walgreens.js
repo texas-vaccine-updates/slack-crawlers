@@ -20,7 +20,7 @@ const checkWalgreens = async () => {
 
     const walgreensStores = data.features.filter((location) => {
       const {provider_brand, appointments} = location.properties;
-      return provider_brand === 'walgreens' && appointments?.length > 3;
+      return provider_brand === 'walgreens' && appointments?.length > 15;
     });
 
     if (lastRunSlotCount.length === 0) {
@@ -35,7 +35,7 @@ const checkWalgreens = async () => {
       const lastRunLength = lastFound?.properties.appointments?.length || 0;
       const prettyCity = capitalizeSentance(city);
 
-      if (appointments.length > (lastRunLength + 10)) {
+      if (appointments.length > (lastRunLength + 15)) {
         slackFields.push({
           type: 'mrkdwn',
           text: `<${scheduleURL}|${name}>:  *${appointments.length}* \n<https://google.com/maps/?q=${postal_code}|${prettyCity}, ${postal_code}>`,
