@@ -10,10 +10,8 @@ const checkUniversity = require('./crawlers/university');
 const checkFallsHospital = require('./crawlers/falls-hospital');
 // const checkCoryell = require('./crawlers/coryellhealth');
 const checkWalmart = require('./crawlers/walmart');
-const checkWalgreens = require('./crawlers/walgreens')
-
-const dotenv = require('dotenv');
 const checkWalgreens = require('./crawlers/walgreens');
+
 dotenv.config();
 
 const cronJobInterval = '*/1 * * * *';
