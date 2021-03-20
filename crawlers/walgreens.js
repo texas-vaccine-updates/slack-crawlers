@@ -2,35 +2,33 @@ require('dotenv').config();
 const fetch = require('node-fetch');
 const {IncomingWebhook} = require('@slack/webhook');
 const renderSlackMessage = require('../utils/renderSlackMessage');
-const walmartURL = 'https://www.vaccinespotter.org/api/v0/states/TX.json';
-const scheduleURL = 'https://www.walmart.com/pharmacy/clinical-services/immunization/scheduled?imzType=covid';
+const walgreensURL = 'https://www.vaccinespotter.org/api/v0/states/TX.json';
+const scheduleURL = 'https://www.walgreens.com/findcare/vaccination/covid-19/location-screening';
 
 const webhookURL = process.env.WALMART_WEBHOOK_URL;
 const webhook = new IncomingWebhook(webhookURL);
 
 let lastRunSlotCount = [];
 
-const checkWalmart = async () => {
+const checkWalgreens = async () => {
   console.log('Checking Walmart for vaccines...');
   try {
-    const response = await fetch(walmartURL);
+    const response = await fetch(walgreensURL);
     const data = await response.json();
 
 
-    const walmartStores = data.features.filter((location) => {
+    const walgreensStores = data.features.filter((location) => {
       const {provider_brand, appointments} = location.properties;
       return provider_brand === 'walgreens' && appointments?.length > 3;
     });
 
-    console.log(walmartStores);
-
     if (lastRunSlotCount.length === 0) {
-      lastRunSlotCount = walmartStores;
+      lastRunSlotCount = walgreensStores;
     }
 
     const slackFields = [];
 
-    walmartStores.forEach((store) => {
+    walgreensStores.forEach((store) => {
       const {id, city, name, appointments, postal_code} = store.properties;
       const lastFound = lastRunSlotCount.find((locale) => locale.properties.id === id);
       const lastRunLength = lastFound?.properties.appointments?.length || 0;
@@ -52,12 +50,10 @@ const checkWalmart = async () => {
       await webhook.send(slackMessage);
     }
 
-    lastRunSlotCount = walmartStores;
+    lastRunSlotCount = walgreensStores;
   } catch (e) {
     console.error(e);
   }
 };
-
-checkWalmart();
 
 module.exports = checkWalmart;
