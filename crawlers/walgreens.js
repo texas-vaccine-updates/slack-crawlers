@@ -11,7 +11,7 @@ const webhook = new IncomingWebhook(webhookURL);
 let lastRunSlotCount = [];
 
 const checkWalgreens = async () => {
-  console.log('Checking Walmart for vaccines...');
+  console.log('Checking Walgreens for vaccines...');
   try {
     const response = await fetch(walgreensURL);
     const data = await response.json();
