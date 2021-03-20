@@ -56,4 +56,4 @@ const checkWalgreens = async () => {
   }
 };
 
-module.exports = checkWalmart;
+module.exports = checkWalgreens;
