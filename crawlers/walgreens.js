@@ -35,7 +35,7 @@ const checkWalgreens = async () => {
       const lastRunLength = lastFound?.properties.appointments?.length || 0;
       const prettyCity = capitalizeSentance(city);
 
-      if (appointments.length > (lastRunLength + 3)) {
+      if (appointments.length > (lastRunLength + 10)) {
         slackFields.push({
           type: 'mrkdwn',
           text: `<${scheduleURL}|${name}>:  *${appointments.length}* \n<https://google.com/maps/?q=${postal_code}|${prettyCity}, ${postal_code}>`,
