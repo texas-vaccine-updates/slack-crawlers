@@ -11,6 +11,12 @@ const webhook = new IncomingWebhook(webhookURL);
 
 let lastRunSlotCount = [];
 
+const excludedStores = [
+  'PASADENA',
+  'LA PORTE',
+  'HUMBLE',
+];
+
 const checkWalgreens = async () => {
   console.log('Checking Walgreens for vaccines...');
   try {
@@ -20,7 +26,7 @@ const checkWalgreens = async () => {
 
     const walgreensStores = data.features.filter((location) => {
       const {provider_brand, appointments, city} = location.properties;
-      return provider_brand === 'walgreens' && appointments?.length > 15 && city !== 'HUMBLE';
+      return provider_brand === 'walgreens' && appointments?.length > 15 && !excludedStores.includes(city);
     });
 
     if (lastRunSlotCount.length === 0) {
