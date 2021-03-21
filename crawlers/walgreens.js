@@ -19,8 +19,8 @@ const checkWalgreens = async () => {
 
 
     const walgreensStores = data.features.filter((location) => {
-      const {provider_brand, appointments} = location.properties;
-      return provider_brand === 'walgreens' && appointments?.length > 15;
+      const {provider_brand, appointments, city} = location.properties;
+      return provider_brand === 'walgreens' && appointments?.length > 15 && city !== 'HUMBLE';
     });
 
     if (lastRunSlotCount.length === 0) {
