@@ -56,6 +56,4 @@ const checkWalmart = async () => {
   }
 };
 
-checkWalmart();
-
 module.exports = checkWalmart;
