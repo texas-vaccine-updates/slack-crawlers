@@ -5,8 +5,7 @@ const jp = require('jsonpath');
 const {IncomingWebhook} = require('@slack/webhook');
 const renderUniversitySlackMessage = require('../utils/renderUniversitySlackMessage');
 const getDateString = require('../utils/getDateString');
-const isEmpty = require('../utils/isEmpty');
-const universityURL = 'https://mychart-openscheduling.et1130.epichosted.com/MyChart/SignupAndSchedule/EmbeddedSchedule?id=51585&dept=10554002&vt=1788&view=grouped';
+const universityURL = 'https://mychart-openscheduling.et1130.epichosted.com/MyChart/SignupAndSchedule/EmbeddedSchedule?id=51748&dept=10554003&vt=1788';
 
 const url = process.env.UNIVERSITY_WEBHOOK_URL;
 const webhook = new IncomingWebhook(url);
@@ -15,7 +14,6 @@ const noCache = Math.random();
 const universityAPI = `https://mychart-openscheduling.et1130.epichosted.com/MyChart/OpenScheduling/OpenScheduling/GetOpeningsForProvider?noCache=${noCache}`;
 
 const dateString = getDateString();
-const futureDateString = getDateString(14);
 
 const options = {
   'headers': {
