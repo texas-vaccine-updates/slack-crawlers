@@ -15,6 +15,7 @@ const excludedStores = [
   'PASADENA',
   'LA PORTE',
   'HUMBLE',
+  'DAYTON',
 ];
 
 const checkWalgreens = async () => {
