@@ -8,7 +8,6 @@ const checkAlamodome = require('./crawlers/alamodome');
 const checkBellCounty = require('./crawlers/bell-county');
 const checkUniversity = require('./crawlers/university');
 const checkFallsHospital = require('./crawlers/falls-hospital');
-// const checkCoryell = require('./crawlers/coryellhealth');
 const checkWalmart = require('./crawlers/walmart');
 const checkWalgreens = require('./crawlers/walgreens');
 
@@ -31,8 +30,6 @@ cron.schedule(cronJobInterval, async () => {
     await checkBellCounty();
     await checkAlamodome();
     await checkUniversity();
-    // await checkRandalls(); NOTE: Currently being blocked by Albertsons
-    // await checkCoryell(); TODO: FIX: 400 requests
     await checkWalmart();
     await checkWalgreens();
     await checkFallsHospital();
