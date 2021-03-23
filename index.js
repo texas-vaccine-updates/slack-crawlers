@@ -30,7 +30,7 @@ cron.schedule(cronJobInterval, async () => {
 
     await checkBellCounty();
     await checkAlamodome();
-    await checkUniversity();
+    // await checkUniversity();
     // await checkRandalls(); NOTE: Currently being blocked by Albertsons
     // await checkCoryell(); TODO: FIX: 400 requests
     await checkWalmart();
