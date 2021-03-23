@@ -29,7 +29,7 @@ cron.schedule(cronJobInterval, async () => {
 
     await checkBellCounty();
     await checkAlamodome();
-    // await checkUniversity(); NOTE: Paused for now
+    await checkUniversity();
     await checkWalmart();
     await checkWalgreens();
     await checkFallsHospital();
