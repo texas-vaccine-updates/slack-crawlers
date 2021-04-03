@@ -5,7 +5,7 @@ module.exports = (url, locations) => {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: '*Vaccines are available! 💉 @channel*',
+          text: '*Vaccines are available! 💉 @here*',
         },
       },
       {
