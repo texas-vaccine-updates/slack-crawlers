@@ -10,6 +10,7 @@ const checkUniversity = require('./crawlers/university');
 const checkFallsHospital = require('./crawlers/falls-hospital');
 const checkWalmart = require('./crawlers/walmart');
 const checkWalgreens = require('./crawlers/walgreens');
+const checkCvs = require('./crawlers/cvs');
 
 const cronJobInterval = '*/1 * * * *';
 
@@ -32,6 +33,7 @@ cron.schedule(cronJobInterval, async () => {
     await checkUniversity();
     await checkWalmart();
     await checkWalgreens();
+    await checkCvs();
     await checkFallsHospital();
   } catch (error) {
     console.error(error);
