@@ -28,13 +28,11 @@ cron.schedule(cronJobInterval, async () => {
     const alive = await keep.text();
     console.log(alive);
 
-    await checkBellCounty();
     await checkAlamodome();
     await checkUniversity();
     await checkWalmart();
     await checkWalgreens();
     await checkCvs();
-    await checkFallsHospital();
   } catch (error) {
     console.error(error);
   }
